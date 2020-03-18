@@ -144,9 +144,9 @@
 		F3F9D2842421ACF700519E08 /* AppearanceKit */ = {
 			isa = PBXGroup;
 			children = (
+				F3F9D2A12421ACF700519E08 /* AppearanceCore */,
 				F3F9D2852421ACF700519E08 /* Extension */,
 				F3F9D29D2421ACF700519E08 /* Runtime */,
-				F3F9D2A12421ACF700519E08 /* AppearanceCore */,
 			);
 			name = AppearanceKit;
 			path = Sources/AppearanceKit;
@@ -195,8 +195,8 @@
 		F3F9D2A12421ACF700519E08 /* AppearanceCore */ = {
 			isa = PBXGroup;
 			children = (
-				F3F9D2A22421ACF700519E08 /* AppearanceCollection.swift */,
 				F3F9D2A32421ACF700519E08 /* DynamicAppearanceType */,
+				F3F9D2A22421ACF700519E08 /* AppearanceCollection.swift */,
 				F3F9D2AA2421ACF700519E08 /* Setup.swift */,
 				F3F9D2AB2421ACF700519E08 /* Appearance.swift */,
 			);
@@ -206,10 +206,10 @@
 		F3F9D2A32421ACF700519E08 /* DynamicAppearanceType */ = {
 			isa = PBXGroup;
 			children = (
+				F3F9D2A72421ACF700519E08 /* DynamicAppearanceType.swift */,
 				F3F9D2A42421ACF700519E08 /* UIImage+DynamicAppearanceType.swift */,
 				F3F9D2A52421ACF700519E08 /* NSAttributedString+AppearanceKit.swift */,
 				F3F9D2A62421ACF700519E08 /* UIColor+DynamicAppearanceType.swift */,
-				F3F9D2A72421ACF700519E08 /* DynamicAppearanceType.swift */,
 				F3F9D2A82421ACF700519E08 /* NSTextAttachment+DynamicAppearanceType.swift */,
 				F3F9D2A92421ACF700519E08 /* CGColor+DynamicAppearanceType.swift */,
 			);

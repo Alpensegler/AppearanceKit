@@ -8,7 +8,7 @@
 import ObjectiveC.runtime
 
 public extension NSObjectProtocol where Self: NSObject {
-    static func swizzle<Function, Block>(selector: Selector, functionType: Function.Type, block: (@escaping () -> Function) -> Block) {
+    static func swizzle<Function, Block>(classType: AnyClass = Self.self, selector: Selector, functionType: Function.Type, block: (@escaping () -> Function) -> Block) {
         guard let originalMethod = class_getInstanceMethod(Self.self, selector) else {
             fatalError("\(selector) must be implemented")
         }
@@ -20,9 +20,9 @@ public extension NSObjectProtocol where Self: NSObject {
         method_setImplementation(originalMethod, swizzledIMP)
     }
     
-    static func swizzle(selector: Selector, to newSelector: Selector) {
-        guard let oldMethod = class_getInstanceMethod(Self.self, selector),
-            let newMethod = class_getInstanceMethod(Self.self, newSelector) else {
+    static func swizzle(classType: AnyClass = Self.self, selector: Selector, to newSelector: Selector) {
+        guard let oldMethod = class_getInstanceMethod(classType, selector),
+            let newMethod = class_getInstanceMethod(classType, newSelector) else {
             fatalError("\(selector),  \(newSelector) must be implemented")
         }
         

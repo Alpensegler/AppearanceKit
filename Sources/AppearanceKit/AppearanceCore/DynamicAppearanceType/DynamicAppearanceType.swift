@@ -13,6 +13,7 @@ public protocol DynamicAppearanceType {
     init(_ dynamicAppearanceBase: DynamicAppearanceBase)
     
     func resolved(for appearance: Appearance) -> DynamicAppearanceBase?
+    func customResolved(for appearance: Appearance) -> DynamicAppearanceBase?
     
     static var defaultAppearance: DynamicAppearanceBase { get }
 }
@@ -28,13 +29,24 @@ public extension DynamicAppearanceType where Self: AnyObject, DynamicAppearanceB
     init(light: DynamicAppearanceBase, dark: DynamicAppearanceBase) {
         self.init { $0.isDarkUserInterfaceStyle ? dark : light }
     }
+    
+    func customResolved(for appearance: Appearance) -> DynamicAppearanceBase? { nil }
 }
 
 public extension DynamicAppearanceType where Self: AnyObject, Self: Equatable, DynamicAppearanceBase == Self {
     func resolved(for appearance: Appearance) -> DynamicAppearanceBase? {
-        let dynamicType = _resolved(for: appearance)
-        dynamicType?.dynamicAppearanceProvider = dynamicAppearanceProvider
-        return dynamicType
+        var result = self
+        while let dynamicType = result.dynamicAppearanceProvider?(appearance) {
+            result = dynamicType
+        }
+        var hasCustom = false
+        if let customResolved = result.customResolved(for: appearance) {
+            result = customResolved
+            hasCustom = true
+        }
+        if result == self { return nil }
+        result.dynamicAppearanceProvider = dynamicAppearanceProvider ?? (hasCustom ? { _ in self } : nil)
+        return result
     }
 }
 
@@ -46,18 +58,6 @@ extension DynamicAppearanceType where Self: AnyObject, DynamicAppearanceBase == 
     var dynamicAppearanceProvider: ((Appearance) -> DynamicAppearanceBase)? {
         get { Associator(self).getAssociated("dynamicAppearanceProvider") }
         nonmutating set { Associator(self).setAssociated("dynamicAppearanceProvider", newValue) }
-    }
-    
-    func _addingProvider(_ provider: ((Appearance) -> Self)?) -> Self {
-        dynamicAppearanceProvider = provider
-        return self
-    }
-}
-
-extension DynamicAppearanceType where Self: AnyObject, Self: Equatable, DynamicAppearanceBase == Self {
-    func _resolved(for appearance: Appearance) -> DynamicAppearanceBase? {
-        guard let dynamicType = dynamicAppearanceProvider?(appearance) else { return nil }
-        return dynamicType == self ? nil : dynamicType
     }
 }
 

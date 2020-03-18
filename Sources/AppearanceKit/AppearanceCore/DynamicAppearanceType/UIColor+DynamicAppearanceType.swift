@@ -10,34 +10,43 @@ import UIKit
 extension UIColor: DynamicAppearanceType {
     public static var defaultAppearance: UIColor { .black }
     
-    public func resolved(for appearance: Appearance) -> UIColor? {
-        let resolved = _resolved(for: appearance)
-        guard #available(iOS 13.0, *) else {
-            return resolved?._addingProvider(dynamicAppearanceProvider)
-        }
-        let color = (resolved ?? self).resolvedColor(with: appearance.traitCollection)
-        guard color != self, let copyColor = copy() as? UIColor else { return nil }
-        return color._addingProvider(dynamicAppearanceProvider ?? { _ in copyColor })
+    public func customResolved(for appearance: Appearance) -> UIColor? {
+        guard #available(iOS 13.0, *) else { return nil }
+        let color = resolvedColor(with: appearance.traitCollection)
+        guard color != self else { return nil }
+        return copy() as? UIColor
     }
 }
 
 extension UIColor {
     static let swizzleForAppearanceOne: Void = {
-        UIColor.swizzle(selector: #selector(getter: cgColor), to: #selector(_cgColor))
-    }()
-    
-    @objc func _cgColor() -> CGColor {
-        let color = _cgColor()
-        guard let dynamicAppearanceProvider = dynamicAppearanceProvider else { return color }
-        color.dynamicAppearanceProvider = {
-            var color = dynamicAppearanceProvider($0)
-            while let resolved = color.resolved(for: $0) {
-                color = resolved
+        UIColor.swizzle(selector: #selector(withAlphaComponent(_:)), to: #selector(_withAlphaComponent(_:)))
+        
+        let classesToSwizzle: [String] = [
+            "UIColor",
+            "UIDeviceRGBColor",
+            "UIDisplayP3Color",
+            "UIPlaceholderColor",
+            "UICIColor",
+            "UIDeviceWhiteColor",
+            "UICGColor",
+            "UICachedDeviceRGBColor",
+            "UICachedDeviceWhiteColor",
+            "UICachedDevicePatternColor",
+            "UIDynamicProviderColor",
+        ]
+
+        for anyClass in classesToSwizzle.lazy.compactMap(NSClassFromString) {
+            swizzle(classType: anyClass.self, selector: #selector(getter: cgColor), functionType: (@convention(c) (AnyObject?) -> CGColor).self) { (imp) -> @convention(block) (AnyObject?) -> CGColor in
+                return {
+                    let color = imp()($0)
+                    guard let copy = ($0 as? UIColor)?.copy() as? UIColor else { return color }
+                    color.dynamicAppearanceProvider = { imp()(copy.resolved(for: $0) ?? copy) }
+                    return color
+                }
             }
-            return color.cgColor
         }
-        return color
-    }
+    }()
     
     @objc func _withAlphaComponent(_ alpha: CGFloat) -> UIColor {
         let color = _withAlphaComponent(alpha)

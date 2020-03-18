@@ -8,18 +8,14 @@
 import UIKit
 
 extension NSTextAttachment: DynamicAppearanceType {
-    public func resolved(for appearance: Appearance) -> NSTextAttachment? {
-        let resolved = _resolved(for: appearance)
-        let attachment = resolved ?? self
-        guard let resolvedImage = attachment.image?.resolved(for: appearance) else {
-            return resolved?._addingProvider(dynamicAppearanceProvider)
-        }
+    public func customResolved(for appearance: Appearance) -> NSTextAttachment? {
+        guard let resolvedImage = image?.resolved(for: appearance) else { return nil }
         let result = NSTextAttachment()
-        result.contents = attachment.contents
-        result.fileType = attachment.fileType
-        result.fileWrapper = attachment.fileWrapper
-        result.bounds = attachment.bounds
+        result.contents = contents
+        result.fileType = fileType
+        result.fileWrapper = fileWrapper
+        result.bounds = bounds
         result.image = resolvedImage
-        return result._addingProvider(dynamicAppearanceProvider)
+        return result
     }
 }

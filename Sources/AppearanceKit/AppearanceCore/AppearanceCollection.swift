@@ -23,9 +23,9 @@ public extension AppearanceCollection {
 extension AppearanceCollection where Self: UITraitEnvironment, Self: NSObject {
     var _currentAppearance: Appearance {
         get {
-            getAssociated(\.appearance) ?? {
+            appearance ?? {
                 let appearance = Appearance(traitCollection: traitCollection)
-                setAssociated(\.appearance, appearance)
+                self.appearance = appearance
                 return appearance
             }()
         }
@@ -37,13 +37,13 @@ extension AppearanceCollection where Self: UITraitEnvironment, Self: NSObject {
     }
 }
 
-extension NSObject {
+extension AppearanceCollection where Self: NSObject {
     var appearance: Appearance? {
-        get { getAssociated(\.appearance) }
-        set { setAssociated(\.appearance, newValue) }
+        get { getAssociated("appearance") }
+        set { setAssociated("appearance", newValue) }
     }
     
-    func _update(to appearance: Appearance, withTraitCollection: Bool = false) {
+    func update(to appearance: Appearance, withTraitCollection: Bool = false) {
         if var currentAppearance = self.appearance {
             currentAppearance.configForUpdate(to: appearance)
             self.appearance = currentAppearance
@@ -51,12 +51,6 @@ extension NSObject {
             self.appearance = appearance
             self.appearance?.attributesStorage.cachedAttributes.removeAll(keepingCapacity: true)
         }
-    }
-}
-
-extension AppearanceCollection where Self: NSObject {
-    func update(to appearance: Appearance, withTraitCollection: Bool = false) {
-        _update(to: appearance, withTraitCollection: withTraitCollection)
         configureAppearance()
     }
     
