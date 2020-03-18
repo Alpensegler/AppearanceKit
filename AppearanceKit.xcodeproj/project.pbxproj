@@ -1,0 +1,649 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		"AppearanceKit::AppearanceKitPackageTests::ProductTarget" /* AppearanceKitPackageTests */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = OBJ_31 /* Build configuration list for PBXAggregateTarget "AppearanceKitPackageTests" */;
+			buildPhases = (
+			);
+			dependencies = (
+				OBJ_34 /* PBXTargetDependency */,
+			);
+			name = AppearanceKitPackageTests;
+			productName = AppearanceKitPackageTests;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		F3128533241D8C2500368651 /* Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128532241D8C2500368651 /* Swizzle.swift */; };
+		F3128535241D8FD600368651 /* Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128534241D8FD600368651 /* Setup.swift */; };
+		F3128537241E0BF900368651 /* CALayer+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128536241E0BF900368651 /* CALayer+AppearanceKit.swift */; };
+		F3128539241EBE7600368651 /* UIColor+DynamicAppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128538241EBE7600368651 /* UIColor+DynamicAppearanceType.swift */; };
+		F312853B241EBEE000368651 /* UIImage+DynamicAppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312853A241EBEE000368651 /* UIImage+DynamicAppearanceType.swift */; };
+		F312853D241F965200368651 /* UILabel+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312853C241F965200368651 /* UILabel+AppearanceKit.swift */; };
+		F312853F241F971700368651 /* UIToolBar+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312853E241F971700368651 /* UIToolBar+AppearanceKit.swift */; };
+		F3128541241F97D600368651 /* CGColor+DynamicAppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128540241F97D600368651 /* CGColor+DynamicAppearanceType.swift */; };
+		F3128543241FC63F00368651 /* UIButton+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128542241FC63F00368651 /* UIButton+AppearanceKit.swift */; };
+		F3128545241FC65400368651 /* UIWindow+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128544241FC65400368651 /* UIWindow+AppearanceKit.swift */; };
+		F3128547241FC66300368651 /* UIProgressView+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128546241FC66300368651 /* UIProgressView+AppearanceKit.swift */; };
+		F3128549241FC67400368651 /* UIScrollView+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128548241FC67400368651 /* UIScrollView+AppearanceKit.swift */; };
+		F312854B241FC68200368651 /* UITextView+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312854A241FC68200368651 /* UITextView+AppearanceKit.swift */; };
+		F312854D241FC69200368651 /* UIImageView+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312854C241FC69200368651 /* UIImageView+AppearanceKit.swift */; };
+		F312854F241FC6A000368651 /* UIPageControl+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312854E241FC6A000368651 /* UIPageControl+AppearanceKit.swift */; };
+		F3128553241FC6C600368651 /* UITableView+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128552241FC6C600368651 /* UITableView+AppearanceKit.swift */; };
+		F3128555241FC6D500368651 /* UINavigationBar+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128554241FC6D500368651 /* UINavigationBar+AppearanceKit.swift */; };
+		F3128557241FC70A00368651 /* UITabBar+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128556241FC70A00368651 /* UITabBar+AppearanceKit.swift */; };
+		F3128559241FC73400368651 /* UITextField+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128558241FC73400368651 /* UITextField+AppearanceKit.swift */; };
+		F312855B241FC74100368651 /* UISlider+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312855A241FC74100368651 /* UISlider+AppearanceKit.swift */; };
+		F312855D241FF61500368651 /* UIViewController+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312855C241FF61500368651 /* UIViewController+AppearanceKit.swift */; };
+		F312855F241FFE4400368651 /* UIBarItem+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312855E241FFE4400368651 /* UIBarItem+AppearanceKit.swift */; };
+		F3128561241FFF8200368651 /* UITabBarItem+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3128560241FFF8200368651 /* UITabBarItem+AppearanceKit.swift */; };
+		F31285632420010400368651 /* UIBarButtonItem+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31285622420010400368651 /* UIBarButtonItem+AppearanceKit.swift */; };
+		F312856524202A8A00368651 /* CAShapeLayer+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312856424202A8A00368651 /* CAShapeLayer+AppearanceKit.swift */; };
+		F312856724202B5700368651 /* CATextLayer+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312856624202B5700368651 /* CATextLayer+AppearanceKit.swift */; };
+		F312856924202BD200368651 /* CAGradientLayer+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312856824202BD200368651 /* CAGradientLayer+AppearanceKit.swift */; };
+		F312856B24216B5A00368651 /* NSAttributedString+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312856A24216B5A00368651 /* NSAttributedString+AppearanceKit.swift */; };
+		F312856D242171EC00368651 /* NSTextAttachment+DynamicAppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F312856C242171EC00368651 /* NSTextAttachment+DynamicAppearanceType.swift */; };
+		F3F71E4B241C3DAF00794810 /* Associator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F71E4A241C3DAF00794810 /* Associator.swift */; };
+		F3F71E4D241C3DE800794810 /* DefaultInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F71E4C241C3DE800794810 /* DefaultInitializable.swift */; };
+		F3F71E55241C3E2500794810 /* DynamicAppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F71E51241C3E2500794810 /* DynamicAppearanceType.swift */; };
+		F3F71E57241C3E2F00794810 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F71E56241C3E2F00794810 /* Appearance.swift */; };
+		F3F71E5A241C464400794810 /* AppearanceCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F71E59241C464400794810 /* AppearanceCollection.swift */; };
+		F3F71E5E241C4B3A00794810 /* UIView+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F71E5D241C4B3A00794810 /* UIView+AppearanceKit.swift */; };
+		OBJ_29 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_40 /* AppearanceKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* AppearanceKitTests.swift */; };
+		OBJ_41 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
+		OBJ_43 /* AppearanceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "AppearanceKit::AppearanceKit::Product" /* AppearanceKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F3F71E47241C3D9700794810 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "AppearanceKit::AppearanceKit";
+			remoteInfo = AppearanceKit;
+		};
+		F3F71E48241C3D9800794810 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "AppearanceKit::AppearanceKitTests";
+			remoteInfo = AppearanceKitTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		"AppearanceKit::AppearanceKit::Product" /* AppearanceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AppearanceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"AppearanceKit::AppearanceKitTests::Product" /* AppearanceKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = AppearanceKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3128532241D8C2500368651 /* Swizzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swizzle.swift; sourceTree = "<group>"; };
+		F3128534241D8FD600368651 /* Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setup.swift; sourceTree = "<group>"; };
+		F3128536241E0BF900368651 /* CALayer+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F3128538241EBE7600368651 /* UIColor+DynamicAppearanceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+DynamicAppearanceType.swift"; sourceTree = "<group>"; };
+		F312853A241EBEE000368651 /* UIImage+DynamicAppearanceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+DynamicAppearanceType.swift"; sourceTree = "<group>"; };
+		F312853C241F965200368651 /* UILabel+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F312853E241F971700368651 /* UIToolBar+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIToolBar+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F3128540241F97D600368651 /* CGColor+DynamicAppearanceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGColor+DynamicAppearanceType.swift"; sourceTree = "<group>"; };
+		F3128542241FC63F00368651 /* UIButton+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F3128544241FC65400368651 /* UIWindow+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F3128546241FC66300368651 /* UIProgressView+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIProgressView+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F3128548241FC67400368651 /* UIScrollView+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F312854A241FC68200368651 /* UITextView+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F312854C241FC69200368651 /* UIImageView+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F312854E241FC6A000368651 /* UIPageControl+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPageControl+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F3128552241FC6C600368651 /* UITableView+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F3128554241FC6D500368651 /* UINavigationBar+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F3128556241FC70A00368651 /* UITabBar+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBar+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F3128558241FC73400368651 /* UITextField+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F312855A241FC74100368651 /* UISlider+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISlider+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F312855C241FF61500368651 /* UIViewController+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F312855E241FFE4400368651 /* UIBarItem+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarItem+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F3128560241FFF8200368651 /* UITabBarItem+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F31285622420010400368651 /* UIBarButtonItem+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F312856424202A8A00368651 /* CAShapeLayer+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAShapeLayer+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F312856624202B5700368651 /* CATextLayer+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CATextLayer+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F312856824202BD200368651 /* CAGradientLayer+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F312856A24216B5A00368651 /* NSAttributedString+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+AppearanceKit.swift"; sourceTree = "<group>"; };
+		F312856C242171EC00368651 /* NSTextAttachment+DynamicAppearanceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextAttachment+DynamicAppearanceType.swift"; sourceTree = "<group>"; };
+		F3F71E4A241C3DAF00794810 /* Associator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Associator.swift; sourceTree = "<group>"; };
+		F3F71E4C241C3DE800794810 /* DefaultInitializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultInitializable.swift; sourceTree = "<group>"; };
+		F3F71E51241C3E2500794810 /* DynamicAppearanceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicAppearanceType.swift; sourceTree = "<group>"; };
+		F3F71E56241C3E2F00794810 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		F3F71E59241C464400794810 /* AppearanceCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceCollection.swift; sourceTree = "<group>"; };
+		F3F71E5D241C4B3A00794810 /* UIView+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AppearanceKit.swift"; sourceTree = "<group>"; };
+		OBJ_12 /* AppearanceKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceKitTests.swift; sourceTree = "<group>"; };
+		OBJ_13 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
+		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		OBJ_23 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_43 /* AppearanceKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F3F71E49241C3DA100794810 /* Runtime */ = {
+			isa = PBXGroup;
+			children = (
+				F3F71E4A241C3DAF00794810 /* Associator.swift */,
+				F3128532241D8C2500368651 /* Swizzle.swift */,
+				F3F71E4C241C3DE800794810 /* DefaultInitializable.swift */,
+			);
+			path = Runtime;
+			sourceTree = "<group>";
+		};
+		F3F71E5B241C46A400794810 /* DynamicAppearanceType */ = {
+			isa = PBXGroup;
+			children = (
+				F3F71E51241C3E2500794810 /* DynamicAppearanceType.swift */,
+				F3128538241EBE7600368651 /* UIColor+DynamicAppearanceType.swift */,
+				F3128540241F97D600368651 /* CGColor+DynamicAppearanceType.swift */,
+				F312853A241EBEE000368651 /* UIImage+DynamicAppearanceType.swift */,
+				F312856A24216B5A00368651 /* NSAttributedString+AppearanceKit.swift */,
+				F312856C242171EC00368651 /* NSTextAttachment+DynamicAppearanceType.swift */,
+			);
+			path = DynamicAppearanceType;
+			sourceTree = "<group>";
+		};
+		F3F71E5C241C4AEE00794810 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F3F71E5D241C4B3A00794810 /* UIView+AppearanceKit.swift */,
+				F312853C241F965200368651 /* UILabel+AppearanceKit.swift */,
+				F312853E241F971700368651 /* UIToolBar+AppearanceKit.swift */,
+				F3128542241FC63F00368651 /* UIButton+AppearanceKit.swift */,
+				F3128544241FC65400368651 /* UIWindow+AppearanceKit.swift */,
+				F3128546241FC66300368651 /* UIProgressView+AppearanceKit.swift */,
+				F3128548241FC67400368651 /* UIScrollView+AppearanceKit.swift */,
+				F312854A241FC68200368651 /* UITextView+AppearanceKit.swift */,
+				F312854C241FC69200368651 /* UIImageView+AppearanceKit.swift */,
+				F312854E241FC6A000368651 /* UIPageControl+AppearanceKit.swift */,
+				F3128552241FC6C600368651 /* UITableView+AppearanceKit.swift */,
+				F3128554241FC6D500368651 /* UINavigationBar+AppearanceKit.swift */,
+				F3128556241FC70A00368651 /* UITabBar+AppearanceKit.swift */,
+				F3128558241FC73400368651 /* UITextField+AppearanceKit.swift */,
+				F312855A241FC74100368651 /* UISlider+AppearanceKit.swift */,
+				F312855C241FF61500368651 /* UIViewController+AppearanceKit.swift */,
+				F312855E241FFE4400368651 /* UIBarItem+AppearanceKit.swift */,
+				F3128560241FFF8200368651 /* UITabBarItem+AppearanceKit.swift */,
+				F31285622420010400368651 /* UIBarButtonItem+AppearanceKit.swift */,
+				F3128536241E0BF900368651 /* CALayer+AppearanceKit.swift */,
+				F312856424202A8A00368651 /* CAShapeLayer+AppearanceKit.swift */,
+				F312856624202B5700368651 /* CATextLayer+AppearanceKit.swift */,
+				F312856824202BD200368651 /* CAGradientLayer+AppearanceKit.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		OBJ_10 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_11 /* AppearanceKitTests */,
+			);
+			name = Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_11 /* AppearanceKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_12 /* AppearanceKitTests.swift */,
+				OBJ_13 /* XCTestManifests.swift */,
+			);
+			name = AppearanceKitTests;
+			path = Tests/AppearanceKitTests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_14 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				"AppearanceKit::AppearanceKit::Product" /* AppearanceKit.framework */,
+				"AppearanceKit::AppearanceKitTests::Product" /* AppearanceKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		OBJ_5 = {
+			isa = PBXGroup;
+			children = (
+				OBJ_6 /* Package.swift */,
+				OBJ_7 /* Sources */,
+				OBJ_10 /* Tests */,
+				OBJ_14 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		OBJ_7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_8 /* AppearanceCore */,
+				F3F71E5C241C4AEE00794810 /* Extension */,
+				F3F71E49241C3DA100794810 /* Runtime */,
+			);
+			name = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_8 /* AppearanceCore */ = {
+			isa = PBXGroup;
+			children = (
+				F3F71E5B241C46A400794810 /* DynamicAppearanceType */,
+				F3F71E56241C3E2F00794810 /* Appearance.swift */,
+				F3F71E59241C464400794810 /* AppearanceCollection.swift */,
+				F3128534241D8FD600368651 /* Setup.swift */,
+			);
+			name = AppearanceCore;
+			path = Sources/AppearanceCore;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		"AppearanceKit::AppearanceKit" /* AppearanceKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_18 /* Build configuration list for PBXNativeTarget "AppearanceKit" */;
+			buildPhases = (
+				OBJ_21 /* Sources */,
+				OBJ_23 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AppearanceKit;
+			productName = AppearanceKit;
+			productReference = "AppearanceKit::AppearanceKit::Product" /* AppearanceKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"AppearanceKit::AppearanceKitTests" /* AppearanceKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_36 /* Build configuration list for PBXNativeTarget "AppearanceKitTests" */;
+			buildPhases = (
+				OBJ_39 /* Sources */,
+				OBJ_42 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_44 /* PBXTargetDependency */,
+			);
+			name = AppearanceKitTests;
+			productName = AppearanceKitTests;
+			productReference = "AppearanceKit::AppearanceKitTests::Product" /* AppearanceKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		"AppearanceKit::SwiftPMPackageDescription" /* AppearanceKitPackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_25 /* Build configuration list for PBXNativeTarget "AppearanceKitPackageDescription" */;
+			buildPhases = (
+				OBJ_28 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AppearanceKitPackageDescription;
+			productName = AppearanceKitPackageDescription;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		OBJ_1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 9999;
+				LastUpgradeCheck = 9999;
+			};
+			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "AppearanceKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = OBJ_5;
+			productRefGroup = OBJ_14 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"AppearanceKit::AppearanceKit" /* AppearanceKit */,
+				"AppearanceKit::SwiftPMPackageDescription" /* AppearanceKitPackageDescription */,
+				"AppearanceKit::AppearanceKitPackageTests::ProductTarget" /* AppearanceKitPackageTests */,
+				"AppearanceKit::AppearanceKitTests" /* AppearanceKitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		OBJ_21 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				F312854F241FC6A000368651 /* UIPageControl+AppearanceKit.swift in Sources */,
+				F3128555241FC6D500368651 /* UINavigationBar+AppearanceKit.swift in Sources */,
+				F3128545241FC65400368651 /* UIWindow+AppearanceKit.swift in Sources */,
+				F312856D242171EC00368651 /* NSTextAttachment+DynamicAppearanceType.swift in Sources */,
+				F312856724202B5700368651 /* CATextLayer+AppearanceKit.swift in Sources */,
+				F3F71E4B241C3DAF00794810 /* Associator.swift in Sources */,
+				F3128557241FC70A00368651 /* UITabBar+AppearanceKit.swift in Sources */,
+				F312856524202A8A00368651 /* CAShapeLayer+AppearanceKit.swift in Sources */,
+				F31285632420010400368651 /* UIBarButtonItem+AppearanceKit.swift in Sources */,
+				F312856924202BD200368651 /* CAGradientLayer+AppearanceKit.swift in Sources */,
+				F312855F241FFE4400368651 /* UIBarItem+AppearanceKit.swift in Sources */,
+				F3128549241FC67400368651 /* UIScrollView+AppearanceKit.swift in Sources */,
+				F3128541241F97D600368651 /* CGColor+DynamicAppearanceType.swift in Sources */,
+				F3F71E5E241C4B3A00794810 /* UIView+AppearanceKit.swift in Sources */,
+				F312853F241F971700368651 /* UIToolBar+AppearanceKit.swift in Sources */,
+				F3128533241D8C2500368651 /* Swizzle.swift in Sources */,
+				F3128559241FC73400368651 /* UITextField+AppearanceKit.swift in Sources */,
+				F312854B241FC68200368651 /* UITextView+AppearanceKit.swift in Sources */,
+				F312855D241FF61500368651 /* UIViewController+AppearanceKit.swift in Sources */,
+				F312856B24216B5A00368651 /* NSAttributedString+AppearanceKit.swift in Sources */,
+				F3128543241FC63F00368651 /* UIButton+AppearanceKit.swift in Sources */,
+				F3F71E55241C3E2500794810 /* DynamicAppearanceType.swift in Sources */,
+				F3128537241E0BF900368651 /* CALayer+AppearanceKit.swift in Sources */,
+				F312855B241FC74100368651 /* UISlider+AppearanceKit.swift in Sources */,
+				F3F71E57241C3E2F00794810 /* Appearance.swift in Sources */,
+				F3F71E5A241C464400794810 /* AppearanceCollection.swift in Sources */,
+				F312853D241F965200368651 /* UILabel+AppearanceKit.swift in Sources */,
+				F312853B241EBEE000368651 /* UIImage+DynamicAppearanceType.swift in Sources */,
+				F3128539241EBE7600368651 /* UIColor+DynamicAppearanceType.swift in Sources */,
+				F3F71E4D241C3DE800794810 /* DefaultInitializable.swift in Sources */,
+				F3128553241FC6C600368651 /* UITableView+AppearanceKit.swift in Sources */,
+				F312854D241FC69200368651 /* UIImageView+AppearanceKit.swift in Sources */,
+				F3128535241D8FD600368651 /* Setup.swift in Sources */,
+				F3128547241FC66300368651 /* UIProgressView+AppearanceKit.swift in Sources */,
+				F3128561241FFF8200368651 /* UITabBarItem+AppearanceKit.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_29 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_40 /* AppearanceKitTests.swift in Sources */,
+				OBJ_41 /* XCTestManifests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		OBJ_34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "AppearanceKit::AppearanceKitTests" /* AppearanceKitTests */;
+			targetProxy = F3F71E48241C3D9800794810 /* PBXContainerItemProxy */;
+		};
+		OBJ_44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "AppearanceKit::AppearanceKit" /* AppearanceKit */;
+			targetProxy = F3F71E47241C3D9700794810 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		OBJ_19 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = AppearanceKit.xcodeproj/AppearanceKit_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = AppearanceKit;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = AppearanceKit;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		OBJ_20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = AppearanceKit.xcodeproj/AppearanceKit_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = AppearanceKit;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = AppearanceKit;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		OBJ_26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		OBJ_27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		OBJ_3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+					"DEBUG=1",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE DEBUG";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USE_HEADERMAP = NO;
+			};
+			name = Debug;
+		};
+		OBJ_32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		OBJ_33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		OBJ_37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = AppearanceKit.xcodeproj/AppearanceKitTests_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = AppearanceKitTests;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		OBJ_38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = AppearanceKit.xcodeproj/AppearanceKitTests_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = AppearanceKitTests;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		OBJ_4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		OBJ_18 /* Build configuration list for PBXNativeTarget "AppearanceKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_19 /* Debug */,
+				OBJ_20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_2 /* Build configuration list for PBXProject "AppearanceKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_3 /* Debug */,
+				OBJ_4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_25 /* Build configuration list for PBXNativeTarget "AppearanceKitPackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_26 /* Debug */,
+				OBJ_27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_31 /* Build configuration list for PBXAggregateTarget "AppearanceKitPackageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_32 /* Debug */,
+				OBJ_33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_36 /* Build configuration list for PBXNativeTarget "AppearanceKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_37 /* Debug */,
+				OBJ_38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = OBJ_1 /* Project object */;
+}
