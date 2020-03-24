@@ -10,7 +10,7 @@ import UIKit
 extension UIButton {
     @objc open override func configureAppearance() {
         super.configureAppearance()
-        let appearance = currentAppearance
+        let appearance = ap
         [State.normal, .highlighted, .disabled, .selected, .focused].forEach { state in
             update(to: appearance, titleColor(for: state)) { setTitleColor($0, for: state) }
             update(to: appearance, titleShadowColor(for: state)) { setTitleShadowColor($0, for: state) }

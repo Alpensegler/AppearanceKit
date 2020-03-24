@@ -10,6 +10,6 @@ import UIKit
 extension CATextLayer {
     @objc open override func configureAppearance() {
         super.configureAppearance()
-        update(to: currentAppearance, &foregroundColor)
+        update(to: ap, &foregroundColor)
     }
 }

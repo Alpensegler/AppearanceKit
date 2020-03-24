@@ -10,9 +10,9 @@ import UIKit
 extension UITabBar {
     @objc open override func configureAppearance() {
         super.configureAppearance()
-        let appearance = currentAppearance
+        let appearance = ap
         update(to: appearance, &barTintColor)
-        items?.forEach { $0.update(to: appearance) }
+        items?.forEach { update(to: appearance, &$0.image) }
     }
 }
 

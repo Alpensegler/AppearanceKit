@@ -9,7 +9,7 @@ import ObjectiveC.runtime
 
 public extension NSObjectProtocol where Self: NSObject {
     static func swizzle<Function, Block>(classType: AnyClass = Self.self, selector: Selector, functionType: Function.Type, block: (@escaping () -> Function) -> Block) {
-        guard let originalMethod = class_getInstanceMethod(Self.self, selector) else {
+        guard let originalMethod = class_getInstanceMethod(classType, selector) else {
             fatalError("\(selector) must be implemented")
         }
 

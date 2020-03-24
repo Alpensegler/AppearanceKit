@@ -8,7 +8,7 @@
 import UIKit
 
 extension NSTextAttachment: DynamicAppearanceType {
-    public func customResolved(for appearance: Appearance) -> NSTextAttachment? {
+    public func customResolved<Base>(for appearance: Appearance<Base>) -> NSTextAttachment? {
         guard let resolvedImage = image?.resolved(for: appearance) else { return nil }
         let result = NSTextAttachment()
         result.contents = contents

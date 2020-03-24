@@ -26,7 +26,9 @@ public struct Associator<Object: AnyObject> {
     }
     
     let object: Object
-    
+}
+
+public extension Associator {
     init(_ object: Object) {
         self.object = object
     }

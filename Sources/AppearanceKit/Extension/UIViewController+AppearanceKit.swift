@@ -7,22 +7,27 @@
 
 import UIKit
 
-extension UIViewController: AppearanceCollection {
-    open var currentAppearance: Appearance {
-        get { _currentAppearance }
-        set { _currentAppearance = newValue }
-    }
-    
+extension UIViewController: AppearanceTraitCollection {
     @objc open func configureAppearance() {
-        appearance?.attributesStorage.configForUpdate()
-        appearance?.traitCollection = traitCollection
         setNeedsStatusBarAppearanceUpdate()
-        if !currentAppearance.configCurrentOnly {
-            let appearance = currentAppearance
-            presentedViewController?.update(to: appearance)
-            children.forEach { $0.update(to: appearance) }
-            if isViewLoaded { view.update(to: appearance) }
+        let appearance = ap
+        for (key, trait) in appearance.changingTrait where trait.environment.throughHierarchy {
+            presentedViewController?.ap.update(trait, key: key)
+            children.forEach { $0.ap.update(trait, key: key) }
+            if isViewLoaded {
+                view.ap.update(trait, key: key)
+            }
         }
-        Appearance.current = appearance
+    }
+}
+
+extension UIViewController {
+    static let swizzleForAppearanceOne: Void = {
+        swizzle(selector: #selector(traitCollectionDidChange(_:)), to: #selector(_traitCollectionDidChange(_:)))
+    }()
+    
+    @objc func _traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        _traitCollectionDidChange(previousTraitCollection)
+        ap.updateWithTraitCollection(traitCollection)
     }
 }

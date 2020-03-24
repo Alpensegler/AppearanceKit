@@ -8,5 +8,7 @@
 import UIKit
 
 extension CGColor: DynamicAppearanceType {
-    public static var defaultAppearance: CGColor { UIColor.white.cgColor }
+    public func customResolved<Base>(for appearance: Appearance<Base>) -> CGColor? {
+        dynamicColorProvider?.customResolved(for: appearance)?.cgColor
+    }
 }

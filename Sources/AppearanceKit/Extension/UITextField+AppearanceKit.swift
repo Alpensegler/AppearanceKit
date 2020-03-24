@@ -10,6 +10,7 @@ import UIKit
 extension UITextField {
     @objc open override func configureAppearance() {
         super.configureAppearance()
+        update(to: ap, &textColor)
     }
 }
 
