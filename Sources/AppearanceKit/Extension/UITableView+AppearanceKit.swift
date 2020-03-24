@@ -10,7 +10,7 @@ import UIKit
 extension UITableView {
     @objc open override func configureAppearance() {
         super.configureAppearance()
-        let appearance = currentAppearance
+        let appearance = ap
         update(to: appearance, &sectionIndexColor)
         update(to: appearance, &separatorColor)
     }

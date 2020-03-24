@@ -11,7 +11,7 @@ extension CAGradientLayer {
     @objc open override func configureAppearance() {
         super.configureAppearance()
         guard let colors = colors as? [CGColor] else { return }
-        let appearance = currentAppearance
+        let appearance = ap
         self.colors = colors.map { $0.resolved(for: appearance) ?? $0 }
     }
 }

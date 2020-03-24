@@ -10,7 +10,7 @@ import UIKit
 extension CAShapeLayer {
     @objc open override func configureAppearance() {
         super.configureAppearance()
-        let appearance = currentAppearance
+        let appearance = ap
         update(to: appearance, &fillColor)
         update(to: appearance, &strokeColor)
     }

@@ -10,9 +10,9 @@ import UIKit
 extension UIWindow {
     @objc open override func configureAppearance() {
         super.configureAppearance()
-        let appearance = currentAppearance
-        if !appearance.configCurrentOnly {
-            rootViewController?.update(to: currentAppearance)
+        let appearance = ap
+        for (key, trait) in appearance.changingTrait where trait.environment.throughHierarchy {
+            rootViewController?.ap.update(trait, key: key)
         }
     }
 }

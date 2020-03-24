@@ -8,7 +8,7 @@
 import UIKit
 
 extension NSAttributedString: DynamicAppearanceType {
-    public func customResolved(for appearance: Appearance) -> NSAttributedString? {
+    public func customResolved<Base>(for appearance: Appearance<Base>) -> NSAttributedString? {
         guard let result = mutableCopy() as? NSMutableAttributedString else { return nil }
         var hasChange = false
         func addReslovedIfNeeded<T: DynamicAppearanceType>(

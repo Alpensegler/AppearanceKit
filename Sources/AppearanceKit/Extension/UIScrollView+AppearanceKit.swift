@@ -10,7 +10,7 @@ import UIKit
 extension UIScrollView {
     @objc open override func configureAppearance() {
         super.configureAppearance()
-        indicatorStyle = currentAppearance.isDarkUserInterfaceStyle ? .black : .default
+        indicatorStyle = ap.isUserInterfaceDark ? .black : .default
     }
 }
 

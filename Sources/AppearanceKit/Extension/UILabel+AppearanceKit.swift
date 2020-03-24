@@ -10,7 +10,7 @@ import UIKit
 extension UILabel {
     @objc open override func configureAppearance() {
         super.configureAppearance()
-        let appearance = currentAppearance
+        let appearance = ap
         update(to: appearance, &textColor)
         update(to: appearance, &highlightedTextColor)
         update(to: appearance, &attributedText)

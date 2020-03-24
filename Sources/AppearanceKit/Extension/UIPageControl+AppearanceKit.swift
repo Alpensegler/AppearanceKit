@@ -10,7 +10,7 @@ import UIKit
 extension UIPageControl {
     @objc open override func configureAppearance() {
         super.configureAppearance()
-        let appearance = currentAppearance
+        let appearance = ap
         update(to: appearance, &pageIndicatorTintColor)
         update(to: appearance, &currentPageIndicatorTintColor)
     }

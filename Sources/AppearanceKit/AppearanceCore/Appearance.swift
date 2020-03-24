@@ -8,94 +8,63 @@
 import UIKit
 
 @dynamicMemberLookup
-public struct Appearance {
-    public struct Attribute {
-        public enum Attribute<T> {
-            case traitCollection(PartialKeyPath<UITraitCollection>, (Any) -> T)
-            case initialValue(@autoclosure () -> T)
-            
-            public static func traitCollection(_ keyPath: KeyPath<UITraitCollection, T>) -> Self {
-                .traitCollection(keyPath) { $0 as! T }
-            }
-        }
+public struct Appearance<Base: AppearanceTraitCollection> {
+    typealias TraitValue = (Value: AnyHashable, environment: AppearanceEnvironmentValue)
+    @WrappedInClass var traits = [AnyHashable: TraitValue]()
+    @WrappedInClass var changingTrait = [AnyHashable: TraitValue]()
+    let appearanceTrait = AppearanceTrait()
+    var traitCollection: UITraitCollection?
+    var throughHierarchy = false
+    let base: Base
+    
+    init(_ base: Base) {
+        self.base = base
+        self.traitCollection = (base as? UITraitEnvironment)?.traitCollection
     }
     
-    final class Storage {
-        var attributes = [AnyHashable: Any]()
-        var cachedAttributes = [AnyHashable: Any]()
-        var previousAttributes = [AnyHashable: Any]()
-        
-        func configForUpdate() {
-            previousAttributes = cachedAttributes
-            cachedAttributes.removeAll(keepingCapacity: true)
-        }
+    mutating func update(_ trait: TraitValue?, key: AnyHashable) {
+        traits[key] = trait
+        changingTrait[key] = trait
     }
     
-    let attributesStorage = Storage()
-    let attribute = Attribute()
-    var traitCollection: UITraitCollection
-    var configCurrentOnly = false
-    
-    static var current: Appearance!
-    
-    func addToCache<T>(key: AnyHashable, value: T) -> T {
-        attributesStorage.cachedAttributes[key] = value
-        return value
-    }
-    
-    mutating func configForUpdate(to appearance: Appearance, withTraitCollection: Bool = false) {
-        attributesStorage.attributes.merge(appearance.attributesStorage.attributes) { (_, other) in other }
-        configCurrentOnly = appearance.configCurrentOnly
-        if withTraitCollection { traitCollection = appearance.traitCollection }
-    }
-}
-
-public extension Appearance.Attribute {
-    var isDarkUserInterfaceStyle: Attribute<Bool> {
-        if #available(iOS 13.0, *) {
-            return .traitCollection(\UITraitCollection.userInterfaceStyle) {
-                $0 as? UIUserInterfaceStyle == .dark
-            }
-        } else {
-            return .initialValue(false)
+    mutating func updateWithTraitCollection(
+        _ traitCollection: UITraitCollection
+    ) {
+        self.traitCollection = traitCollection
+        for (key, (value, environment)) in traits {
+            guard let getter = environment.anyHashableGetter else { continue }
+            let triatValue = getter(traitCollection)
+            guard triatValue == value else { continue }
+            update((triatValue, environment), key: key)
+            throughHierarchy = throughHierarchy || environment.throughHierarchy
         }
     }
 }
 
 public extension Appearance {
-    subscript<T>(dynamicMember keyPath: KeyPath<Attribute, Attribute.Attribute<T>>) -> T {
+    subscript<Value: Hashable>(
+        dynamicMember keyPath: KeyPath<AppearanceTrait, AppearanceTrait.EnvironmentValue<Value>>
+    ) -> Value {
         get {
-            switch attribute[keyPath: keyPath] {
-            case let .traitCollection(keyPath, cast):
-                return cast(addToCache(key: keyPath, value: traitCollection[keyPath: keyPath]))
-            case let .initialValue(value):
-                return addToCache(key: keyPath, value: attributesStorage.attributes[keyPath] as? T ?? {
-                    let initialValue = value()
-                    attributesStorage.attributes[keyPath] = initialValue
-                    return initialValue
-                }())
-            }
+            return traits[keyPath]?.0 as? Value ?? {
+                let environment = appearanceTrait[keyPath: keyPath]
+                traits[keyPath] = (environment.defaultValue, environment)
+                return environment.defaultValue
+            }()
         }
         set {
-            guard case .initialValue = attribute[keyPath: keyPath] else { return }
-            attributesStorage.attributes[keyPath] = newValue
+            let (value, environment) = traits[keyPath] as? (Value, AppearanceEnvironmentValue) ?? {
+                let environment = appearanceTrait[keyPath: keyPath]
+                return (environment.defaultValue, environment)
+            }()
+            if value == newValue { return }
+            update((newValue, environment), key: keyPath)
         }
     }
     
-    subscript<T>(dynamicMember keyPath: KeyPath<UITraitCollection, T>) -> T {
-        addToCache(key: keyPath, value: traitCollection[keyPath: keyPath])
-    }
-    
-    func previousAttribute<T>(_ keyPath: KeyPath<Attribute, Attribute.Attribute<T>>) -> T? {
-        switch attribute[keyPath: keyPath] {
-        case let .traitCollection(keyPath, cast):
-            return attributesStorage.previousAttributes[keyPath].map(cast)
-        case .initialValue:
-            return attributesStorage.previousAttributes[keyPath] as? T
-        }
-    }
-    
-    func previousAttribute<T>(_ keyPath: KeyPath<UITraitCollection, T>) -> T? {
-        attributesStorage.previousAttributes[keyPath] as? T
+    func didChange<Value: Hashable>(
+        _ keyPath: KeyPath<AppearanceTrait, AppearanceTrait.EnvironmentValue<Value>>
+    ) -> Bool {
+        changingTrait[keyPath] != nil
     }
 }

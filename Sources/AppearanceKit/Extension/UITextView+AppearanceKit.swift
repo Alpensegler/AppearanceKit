@@ -10,8 +10,8 @@ import UIKit
 extension UITextView {
     @objc open override func configureAppearance() {
         super.configureAppearance()
-        let appearance = currentAppearance
-        indicatorStyle = appearance.isDarkUserInterfaceStyle ? .black : .default
+        let appearance = ap
+        indicatorStyle = appearance.isUserInterfaceDark ? .black : .default
         update(to: appearance, &attributedText)
     }
 }

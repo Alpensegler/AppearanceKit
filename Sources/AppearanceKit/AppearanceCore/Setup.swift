@@ -9,8 +9,8 @@ import UIKit
 
 public extension Appearance {
     static func setup() {
-//        _ = UIView.swizzleForAppearanceOne
-//        _ = UIColor.swizzleForAppearanceOne
-        
+        _ = UIView.swizzleForAppearanceOne
+        _ = UIColor.swizzleForAppearanceOne
+        _ = UIViewController.swizzleForAppearanceOne
     }
 }

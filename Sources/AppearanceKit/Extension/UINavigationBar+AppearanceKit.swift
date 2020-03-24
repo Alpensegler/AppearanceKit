@@ -10,7 +10,7 @@ import UIKit
 extension UINavigationBar {
     @objc open override func configureAppearance() {
         super.configureAppearance()
-        update(to: currentAppearance, &barTintColor)
+        update(to: ap, &barTintColor)
     }
 }
 
