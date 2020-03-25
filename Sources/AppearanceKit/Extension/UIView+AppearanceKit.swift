@@ -18,7 +18,7 @@ extension UIView: AppearanceTraitCollection {
         setNeedsLayout()
         setNeedsDisplay()
         update(to: appearance, &backgroundColor)
-        update(to: appearance, &tintColor)
+//        update(to: appearance, &tintColor)
     }
 }
 
