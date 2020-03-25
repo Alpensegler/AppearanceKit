@@ -39,7 +39,9 @@ public extension AppearanceTrait.EnvironmentValue {
 public extension AppearanceTrait {
     var isUserInterfaceDark: EnvironmentValue<Bool> {
         if #available(iOS 13.0, *) {
-            return .traitCollection(defaultValue: false) { $0.userInterfaceStyle == .dark }
+            return .traitCollection(defaultValue: UITraitCollection.current.userInterfaceStyle == .dark) {
+                $0.userInterfaceStyle == .dark
+            }
         } else {
             return .stored(defaultValue: false)
         }

@@ -10,6 +10,6 @@ Pod::Spec.new do |spec|
   spec.author = { "Frain" => "frainl@outlook.com" }
   spec.source = { :git => "" }
   spec.source_files  = "**/*.{h,m,swift}"
-  spec.exclude_files = ['Tests', 'Package.swift']
+  spec.exclude_files = ['Tests', 'AppearanceKitDemo', 'Package.swift']
 
 end
