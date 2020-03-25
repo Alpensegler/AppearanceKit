@@ -25,8 +25,8 @@ public extension AppearanceTraitCollection {
 
 extension AppearanceTraitCollection {
     var _ap: Appearance<Self> {
-        get { Associator(self).getAssociated("appearanceKit.appearance", initialValue: .init(self)) }
-        set { Associator(self).setAssociated("appearanceKit.appearance", newValue) }
+        get { .init(appearanceType: Associator(self).getAssociated("appearanceKit.appearance"), self) }
+        set { Associator(self).setAssociated("appearanceKit.appearance", newValue as StoredAppearance) }
     }
     
     func update<Base, Value>(to appearance: Appearance<Base>, _ getter: Value?, _ setter: (Value?) -> Void)

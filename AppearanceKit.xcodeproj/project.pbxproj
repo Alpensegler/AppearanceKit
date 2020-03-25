@@ -23,6 +23,8 @@
 /* Begin PBXBuildFile section */
 		F347750024294B9300398E86 /* AppearanceTrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34774FF24294B9300398E86 /* AppearanceTrait.swift */; };
 		F3477562242A047D00398E86 /* WrappedInClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3477561242A047D00398E86 /* WrappedInClass.swift */; };
+		F35F328F242AFF490082E148 /* BindableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35F328E242AFF490082E148 /* BindableProperty.swift */; };
+		F35F3291242AFF830082E148 /* UIBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35F3290242AFF830082E148 /* UIBindable.swift */; };
 		F3F9D2AC2421ACF700519E08 /* UITabBar+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F9D2862421ACF700519E08 /* UITabBar+AppearanceKit.swift */; };
 		F3F9D2AD2421ACF700519E08 /* UITextField+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F9D2872421ACF700519E08 /* UITextField+AppearanceKit.swift */; };
 		F3F9D2AE2421ACF700519E08 /* UISlider+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F9D2882421ACF700519E08 /* UISlider+AppearanceKit.swift */; };
@@ -83,6 +85,8 @@
 		"AppearanceKit::AppearanceKitTests::Product" /* AppearanceKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = AppearanceKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F34774FF24294B9300398E86 /* AppearanceTrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceTrait.swift; sourceTree = "<group>"; };
 		F3477561242A047D00398E86 /* WrappedInClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedInClass.swift; sourceTree = "<group>"; };
+		F35F328E242AFF490082E148 /* BindableProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindableProperty.swift; sourceTree = "<group>"; };
+		F35F3290242AFF830082E148 /* UIBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBindable.swift; sourceTree = "<group>"; };
 		F3F9D2862421ACF700519E08 /* UITabBar+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBar+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3F9D2872421ACF700519E08 /* UITextField+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3F9D2882421ACF700519E08 /* UISlider+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISlider+AppearanceKit.swift"; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 				F3F9D2AB2421ACF700519E08 /* Appearance.swift */,
 				F34774FF24294B9300398E86 /* AppearanceTrait.swift */,
 				F3F9D2A22421ACF700519E08 /* AppearanceTraitCollection.swift */,
+				F35F328E242AFF490082E148 /* BindableProperty.swift */,
+				F35F3290242AFF830082E148 /* UIBindable.swift */,
 				F3F9D2AA2421ACF700519E08 /* Setup.swift */,
 			);
 			path = AppearanceCore;
@@ -349,6 +355,7 @@
 				F347750024294B9300398E86 /* AppearanceTrait.swift in Sources */,
 				F3F9D2B22421ACF700519E08 /* UIButton+AppearanceKit.swift in Sources */,
 				F3F9D2AD2421ACF700519E08 /* UITextField+AppearanceKit.swift in Sources */,
+				F35F328F242AFF490082E148 /* BindableProperty.swift in Sources */,
 				F3F9D2BF2421ACF700519E08 /* UIViewController+AppearanceKit.swift in Sources */,
 				F3F9D2B92421ACF700519E08 /* UIScrollView+AppearanceKit.swift in Sources */,
 				F3F9D2B62421ACF700519E08 /* UITextView+AppearanceKit.swift in Sources */,
@@ -371,6 +378,7 @@
 				F3F9D2B52421ACF700519E08 /* UIWindow+AppearanceKit.swift in Sources */,
 				F3F9D2C22421ACF700519E08 /* UIToolBar+AppearanceKit.swift in Sources */,
 				F3F9D2CC2421ACF700519E08 /* CGColor+DynamicAppearanceType.swift in Sources */,
+				F35F3291242AFF830082E148 /* UIBindable.swift in Sources */,
 				F3F9D2C52421ACF700519E08 /* Associator.swift in Sources */,
 				F3477562242A047D00398E86 /* WrappedInClass.swift in Sources */,
 				F3F9D2C42421ACF700519E08 /* DefaultInitializable.swift in Sources */,

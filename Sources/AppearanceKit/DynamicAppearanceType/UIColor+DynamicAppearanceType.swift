@@ -31,6 +31,8 @@ extension UIColor {
             "UICachedDeviceRGBColor",
             "UICachedDeviceWhiteColor",
             "UICachedDevicePatternColor",
+            "UIDynamicSystemColor",
+            "UIDynamicModifiedColor",
             "UIDynamicProviderColor",
         ]
 
@@ -38,19 +40,37 @@ extension UIColor {
             swizzle(classType: anyClass.self, selector: #selector(getter: cgColor), functionType: (@convention(c) (UIColor) -> CGColor).self) { (imp) -> @convention(block) (UIColor) -> CGColor in
                 return {
                     let color = imp()($0)
-                    color.dynamicColorProvider = $0.copy() as? UIColor
+                    color.dynamicColorProvider = $0
                     return color
                 }
             }
             
-            swizzle(classType: anyClass.self, selector: #selector(withAlphaComponent(_:)), functionType: (@convention(c) (UIColor, Selector, CGFloat) -> UIColor).self) { (imp) -> @convention(block) (UIColor, Selector, CGFloat) -> UIColor in
+            swizzle(classType: anyClass.self, selector: #selector(copy), functionType: (@convention(c) (UIColor) -> UIColor).self) { (imp) -> @convention(block) (UIColor) -> UIColor in
+                return {
+                    let color = imp()($0)
+                    color.dynamicAppearanceProvider = $0.dynamicAppearanceProvider
+                    return color
+                }
+            }
+            
+            
+            swizzle(classType: anyClass.self, selector: #selector(copy(with:)), functionType: (@convention(c) (UIColor, Selector, NSZone?) -> UIColor).self) { (imp) -> @convention(block) (UIColor, Selector, NSZone?) -> UIColor in
+                return {
+                    let color = imp()($0, $1, $2)
+                    color.dynamicAppearanceProvider = $0.dynamicAppearanceProvider
+                    return color
+                }
+            }
+            
+            swizzle(classType: anyClass.self, selector: #selector(withAlphaComponent(_:)), functionType: (@convention(c) (AnyObject, Selector, CGFloat) -> UIColor).self) { (imp) -> @convention(block) (AnyObject, Selector, CGFloat) -> UIColor in
                 return { (obj, sel, alpha) in
                     let rawImplement = imp()
-                    let color = rawImplement(obj, sel, alpha)
-                    color.dynamicColorProvider = obj.dynamicColorProvider.map { rawImplement($0, sel, alpha) }
-                    guard let provider = obj.dynamicAppearanceProvider?.provider else { return color }
-                    color.dynamicAppearanceProvider?.provider = { provider($0).map { rawImplement($0, sel, alpha) } }
-                    return color
+                    let result = rawImplement(obj, sel, alpha)
+                    guard let color = obj as? UIColor else { return result }
+                    result.dynamicColorProvider = color.dynamicColorProvider.map { rawImplement($0, sel, alpha) }
+                    guard let provider = color.dynamicAppearanceProvider?.provider else { return result }
+                    result.dynamicAppearanceProvider?.provider = { provider($0).map { rawImplement($0, sel, alpha) } }
+                    return result
                 }
             }
         }

@@ -7,19 +7,27 @@
 
 import UIKit
 
+typealias TraitValue = (Value: AnyHashable, environment: AppearanceEnvironmentValue)
+
+protocol StoredAppearance {
+    var traits: [AnyHashable: TraitValue] { get nonmutating set }
+    var changingTrait: [AnyHashable: TraitValue]  { get nonmutating set }
+    var traitCollection: UITraitCollection? { get }
+}
+
 @dynamicMemberLookup
-public struct Appearance<Base: AppearanceTraitCollection> {
-    typealias TraitValue = (Value: AnyHashable, environment: AppearanceEnvironmentValue)
+public struct Appearance<Base: AppearanceTraitCollection>: StoredAppearance {
     @WrappedInClass var traits = [AnyHashable: TraitValue]()
     @WrappedInClass var changingTrait = [AnyHashable: TraitValue]()
     let appearanceTrait = AppearanceTrait()
     var traitCollection: UITraitCollection?
-    var throughHierarchy = false
     let base: Base
     
-    init(_ base: Base) {
+    init(appearanceType: StoredAppearance?, _ base: Base) {
         self.base = base
-        self.traitCollection = (base as? UITraitEnvironment)?.traitCollection
+        self.traits = appearanceType?.traits ?? [:]
+        self.changingTrait = appearanceType?.changingTrait ?? [:]
+        self.traitCollection = appearanceType?.traitCollection ?? (base as? UITraitEnvironment)?.traitCollection
     }
     
     mutating func update(_ trait: TraitValue?, key: AnyHashable) {
@@ -36,7 +44,6 @@ public struct Appearance<Base: AppearanceTraitCollection> {
             let triatValue = getter(traitCollection)
             guard triatValue == value else { continue }
             update((triatValue, environment), key: key)
-            throughHierarchy = throughHierarchy || environment.throughHierarchy
         }
     }
 }
@@ -53,13 +60,17 @@ public extension Appearance {
             }()
         }
         set {
-            let (value, environment) = traits[keyPath] as? (Value, AppearanceEnvironmentValue) ?? {
+            let (value, environment) = traits[keyPath] ?? {
                 let environment = appearanceTrait[keyPath: keyPath]
                 return (environment.defaultValue, environment)
             }()
-            if value == newValue { return }
+            if value == AnyHashable(newValue) { return }
             update((newValue, environment), key: keyPath)
         }
+    }
+    
+    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Base, Value>) -> BindableProperty<Base, Value> {
+        .init(root: base, keyPath: keyPath)
     }
     
     func didChange<Value: Hashable>(

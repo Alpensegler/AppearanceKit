@@ -7,8 +7,8 @@
 
 import UIKit
 
-public extension Appearance {
-    static func setup() {
+public enum AppearanceManager {
+    public static func setup() {
         _ = UIView.swizzleForAppearanceOne
         _ = UIColor.swizzleForAppearanceOne
         _ = UIViewController.swizzleForAppearanceOne
