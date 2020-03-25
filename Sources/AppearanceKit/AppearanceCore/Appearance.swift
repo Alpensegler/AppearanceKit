@@ -9,42 +9,49 @@ import UIKit
 
 typealias TraitValue = (Value: AnyHashable, environment: AppearanceEnvironmentValue)
 
-protocol StoredAppearance {
-    var traits: [AnyHashable: TraitValue] { get nonmutating set }
-    var changingTrait: [AnyHashable: TraitValue]  { get nonmutating set }
-    var traitCollection: UITraitCollection? { get }
-}
-
 @dynamicMemberLookup
-public struct Appearance<Base: AppearanceTraitCollection>: StoredAppearance {
-    @WrappedInClass var traits = [AnyHashable: TraitValue]()
-    @WrappedInClass var changingTrait = [AnyHashable: TraitValue]()
+public struct Appearance<Base: AppearanceTraitCollection>: CustomStringConvertible {
+    @WrappedInAssociated var traits: [AnyHashable: TraitValue]
+    @WrappedInAssociated var changingTrait: [AnyHashable: TraitValue]
+    @WrappedInAssociated var traitCollection: UITraitCollection?
     let appearanceTrait = AppearanceTrait()
-    var traitCollection: UITraitCollection?
     let base: Base
     
-    init(appearanceType: StoredAppearance?, _ base: Base) {
+    init(_ base: Base) {
         self.base = base
-        self.traits = appearanceType?.traits ?? [:]
-        self.changingTrait = appearanceType?.changingTrait ?? [:]
-        self.traitCollection = appearanceType?.traitCollection ?? (base as? UITraitEnvironment)?.traitCollection
+        self._traits = .init(base: base, key: "AppearanceKit.traits")
+        self._changingTrait = .init(base: base, key: "AppearanceKit.changeTraits")
+        self._traitCollection = .init(base: base, key: "AppearanceKit.traitCollection", wrappedValue: (base as? UITraitEnvironment)?.traitCollection)
     }
     
-    mutating func update(_ trait: TraitValue?, key: AnyHashable) {
+    func clearChangingTrait() {
+        changingTrait.removeAll()
+    }
+    
+    func update(_ trait: TraitValue?, key: AnyHashable) {
         traits[key] = trait
         changingTrait[key] = trait
+        base.configureAppearance()
+        changingTrait.removeAll()
     }
     
-    mutating func updateWithTraitCollection(
+    func updateWithTraitCollection(
         _ traitCollection: UITraitCollection
     ) {
         self.traitCollection = traitCollection
         for (key, (value, environment)) in traits {
             guard let getter = environment.anyHashableGetter else { continue }
             let triatValue = getter(traitCollection)
-            guard triatValue == value else { continue }
+            guard triatValue != value else { continue }
             update((triatValue, environment), key: key)
         }
+    }
+    
+    public var description: String {
+        """
+        \(traits)
+        \(changingTrait)
+        """
     }
 }
 

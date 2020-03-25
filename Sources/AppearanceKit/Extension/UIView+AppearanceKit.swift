@@ -26,11 +26,12 @@ extension UIView {
     static let swizzleForAppearanceOne: Void = {
         swizzle(selector: #selector(traitCollectionDidChange(_:)), to: #selector(_traitCollectionDidChange(_:)))
         swizzle(selector: #selector(addSubview(_:)), to: #selector(__addSubview(_:)))
+        swizzle(selector: #selector(willMove(toWindow:)), to: #selector(__willMoveTo(_:)))
     }()
     
     @objc func _traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         _traitCollectionDidChange(previousTraitCollection)
-        layer.ap.traitCollection = ap.traitCollection
+        layer.ap.updateWithTraitCollection(traitCollection)
         ap.updateWithTraitCollection(traitCollection)
     }
     
@@ -40,6 +41,14 @@ extension UIView {
         for (key, trait) in appearance.changingTrait where trait.environment.throughHierarchy {
             view.ap.update(trait, key: key)
         }
+    }
+    
+    @objc func __willMoveTo(_ window: UIWindow?) {
+        __willMoveTo(window)
+        guard window != nil else { return }
+        configureAppearance()
+        layer.ap.updateWithTraitCollection(traitCollection)
+        ap.updateWithTraitCollection(traitCollection)
     }
 }
 
