@@ -22,3 +22,18 @@ extension CALayer: AppearanceTraitCollection {
         update(to: appearance, &shadowColor)
     }
 }
+
+extension CALayer {
+    static let swizzleForAppearanceOne: Void = {
+        swizzle(selector: #selector(addSublayer(_:)), to: #selector(__addSublayer(_:)))
+    }()
+    
+    @objc func __addSublayer(_ layer: CALayer) {
+        __addSublayer(layer)
+        guard layer.delegate == nil else { return }
+        let appearance = ap
+        for (key, trait) in appearance.changingTrait where trait.environment.throughHierarchy {
+            layer.ap.update(trait, key: key)
+        }
+    }
+}

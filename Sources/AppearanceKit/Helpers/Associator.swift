@@ -87,7 +87,7 @@ public extension Associatable {
 
 extension NSObject: Associatable { }
 
-fileprivate extension Hashable {
+extension Hashable {
     var address: UnsafeRawPointer {
         return UnsafeRawPointer(bitPattern: abs(hashValue))!
     }

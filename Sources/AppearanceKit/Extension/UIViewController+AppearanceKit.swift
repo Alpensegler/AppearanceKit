@@ -24,10 +24,19 @@ extension UIViewController: AppearanceTraitCollection {
 extension UIViewController {
     static let swizzleForAppearanceOne: Void = {
         swizzle(selector: #selector(traitCollectionDidChange(_:)), to: #selector(_traitCollectionDidChange(_:)))
+        swizzle(selector: #selector(addChild(_:)), to: #selector(__addChild(_:)))
     }()
     
     @objc func _traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         _traitCollectionDidChange(previousTraitCollection)
         ap.updateWithTraitCollection(traitCollection)
+    }
+    
+    @objc func __addChild(_ childController: UIViewController) {
+        __addChild(childController)
+        let appearance = ap
+        for (key, trait) in appearance.changingTrait where trait.environment.throughHierarchy {
+            childController.ap.update(trait, key: key)
+        }
     }
 }
