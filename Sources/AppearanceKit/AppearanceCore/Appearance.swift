@@ -7,28 +7,31 @@
 
 import UIKit
 
-typealias TraitValue = (Value: AnyHashable, environment: AppearanceEnvironmentValue)
+struct TraitValue {
+    var value: AnyHashable
+    var environment: AppearanceEnvironmentValue
+}
 
 @dynamicMemberLookup
 public struct Appearance<Base: AppearanceTraitCollection>: CustomStringConvertible {
-    @WrappedInAssociated var traits: [AnyHashable: TraitValue]
-    @WrappedInAssociated var changingTrait: [AnyHashable: TraitValue]
-    @WrappedInAssociated var traitCollection: UITraitCollection?
+    @Referance var traits: [Int: TraitValue]
+    @Referance var changingTrait: [Int: TraitValue]
+    @Referance var traitCollection: UITraitCollection?
     let appearanceTrait = AppearanceTrait()
     let base: Base
     
     init(_ base: Base) {
         self.base = base
-        self._traits = .init(base: base, key: "AppearanceKit.traits")
-        self._changingTrait = .init(base: base, key: "AppearanceKit.changeTraits")
-        self._traitCollection = .init(base: base, key: "AppearanceKit.traitCollection", wrappedValue: (base as? UITraitEnvironment)?.traitCollection)
+        self._traits = .init(assciatedIn: base, key: "AppearanceKit.traits")
+        self._changingTrait = .init(assciatedIn: base, key: "AppearanceKit.changeTraits")
+        self._traitCollection = .init(assciatedIn: base, key: "AppearanceKit.traitCollection", wrappedValue: (base as? UITraitEnvironment)?.traitCollection)
     }
     
     func clearChangingTrait() {
         changingTrait.removeAll()
     }
     
-    func update(_ trait: TraitValue?, key: AnyHashable) {
+    func update(_ trait: TraitValue?, key: Int) {
         traits[key] = trait
         changingTrait[key] = trait
         base.configureAppearance()
@@ -39,11 +42,11 @@ public struct Appearance<Base: AppearanceTraitCollection>: CustomStringConvertib
         _ traitCollection: UITraitCollection
     ) {
         self.traitCollection = traitCollection
-        for (key, (value, environment)) in traits {
-            guard let getter = environment.anyHashableGetter else { continue }
+        for (key, trait) in traits {
+            guard let getter = trait.environment.anyHashableGetter else { continue }
             let triatValue = getter(traitCollection)
-            guard triatValue != value else { continue }
-            update((triatValue, environment), key: key)
+            guard triatValue != trait.value else { continue }
+            update(.init(value: triatValue, environment: trait.environment), key: key)
         }
     }
     
@@ -60,19 +63,19 @@ public extension Appearance {
         dynamicMember keyPath: KeyPath<AppearanceTrait, AppearanceTrait.EnvironmentValue<Value>>
     ) -> Value {
         get {
-            return traits[keyPath]?.0 as? Value ?? {
+            return traits[keyPath.hashValue]?.value as? Value ?? {
                 let environment = appearanceTrait[keyPath: keyPath]
-                traits[keyPath] = (environment.defaultValue, environment)
+                traits[keyPath.hashValue] = .init(value: environment.defaultValue, environment: environment)
                 return environment.defaultValue
             }()
         }
-        set {
-            let (value, environment) = traits[keyPath] ?? {
+        nonmutating set {
+            let trait = traits[keyPath.hashValue] ?? {
                 let environment = appearanceTrait[keyPath: keyPath]
-                return (environment.defaultValue, environment)
+                return .init(value: environment.defaultValue, environment: environment)
             }()
-            if value == AnyHashable(newValue) { return }
-            update((newValue, environment), key: keyPath)
+            if trait.value == AnyHashable(newValue) { return }
+            update(.init(value: newValue, environment: trait.environment), key: keyPath.hashValue)
         }
     }
     
@@ -83,6 +86,6 @@ public extension Appearance {
     func didChange<Value: Hashable>(
         _ keyPath: KeyPath<AppearanceTrait, AppearanceTrait.EnvironmentValue<Value>>
     ) -> Bool {
-        changingTrait[keyPath] != nil
+        changingTrait[keyPath.hashValue] != nil
     }
 }

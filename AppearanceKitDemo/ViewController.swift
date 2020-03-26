@@ -38,6 +38,14 @@ class ViewController: UIViewController {
             target: self,
             action: #selector(refresh)
         )
+        
+        print(ap.theme)
+        print(ap.theme)
+    }
+    
+    var assciatedValue: Int {
+        get { getAssociated(\.assciatedValue) }
+        set { setAssociated(\.assciatedValue, newValue) }
     }
     
     @objc private func refresh() {

@@ -13,7 +13,6 @@
 		F34775DC242AA5CF00398E86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F34775DA242AA5CF00398E86 /* LaunchScreen.storyboard */; };
 		F34775E5242AA64700398E86 /* AppearanceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F34775E4242AA64700398E86 /* AppearanceKit.framework */; };
 		F34775E6242AA64700398E86 /* AppearanceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F34775E4242AA64700398E86 /* AppearanceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F34775E9242AACA500398E86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34775E8242AACA500398E86 /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,7 +37,6 @@
 		F34775DB242AA5CF00398E86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F34775DD242AA5CF00398E86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F34775E4242AA64700398E86 /* AppearanceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AppearanceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F34775E8242AACA500398E86 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				F34775CF242AA5CB00398E86 /* AppDelegate.swift */,
-				F34775E8242AACA500398E86 /* SceneDelegate.swift */,
 				F34775D3242AA5CB00398E86 /* ViewController.swift */,
 				F34775D8242AA5CF00398E86 /* Assets.xcassets */,
 				F34775DA242AA5CF00398E86 /* LaunchScreen.storyboard */,
@@ -164,7 +161,6 @@
 			files = (
 				F34775D4242AA5CB00398E86 /* ViewController.swift in Sources */,
 				F34775D0242AA5CB00398E86 /* AppDelegate.swift in Sources */,
-				F34775E9242AACA500398E86 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +299,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BCUYJQB9VH;
 				INFOPLIST_FILE = AppearanceKitDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -321,6 +318,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BCUYJQB9VH;
 				INFOPLIST_FILE = AppearanceKitDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

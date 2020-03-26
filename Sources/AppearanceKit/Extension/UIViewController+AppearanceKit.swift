@@ -23,12 +23,12 @@ extension UIViewController: AppearanceTraitCollection {
 
 extension UIViewController {
     static let swizzleForAppearanceOne: Void = {
-        swizzle(selector: #selector(traitCollectionDidChange(_:)), to: #selector(_traitCollectionDidChange(_:)))
+        swizzle(selector: #selector(traitCollectionDidChange(_:)), to: #selector(__traitCollectionDidChange(_:)))
         swizzle(selector: #selector(addChild(_:)), to: #selector(__addChild(_:)))
     }()
     
-    @objc func _traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        _traitCollectionDidChange(previousTraitCollection)
+    @objc func __traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        __traitCollectionDidChange(previousTraitCollection)
         ap.updateWithTraitCollection(traitCollection)
     }
     

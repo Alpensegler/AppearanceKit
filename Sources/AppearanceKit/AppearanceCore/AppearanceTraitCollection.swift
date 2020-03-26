@@ -15,7 +15,7 @@ public extension AppearanceTraitCollection {
     var ap: Appearance<Self> { .init(self) }
 }
 
-extension AppearanceTraitCollection {
+public extension AppearanceTraitCollection {
     func update<Base, Value>(to appearance: Appearance<Base>, _ getter: Value?, _ setter: (Value?) -> Void)
     where Value: DynamicAppearanceType, Value.DynamicAppearanceBase == Value {
         if let resolved = getter?.resolved(for: appearance) {

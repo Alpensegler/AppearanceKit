@@ -6,43 +6,34 @@
 //
 
 @propertyWrapper
-public class WrappedInClass<Value> {
-    public var wrappedValue: Value
-    
-    public init(wrappedValue: Value) {
-        self.wrappedValue = wrappedValue
-    }
-}
-
-@propertyWrapper
-public struct WrappedInAssociated<Value> {
-    let base: AnyObject
-    let key: String
-    var initialValue: () -> Value
+public struct Referance<Value> {
+    let getter: () -> Value
+    let setter: (Value) -> Void
     
     public var wrappedValue: Value {
-        get { Associator(base).getAssociated(key, initialValue: initialValue()) }
-        nonmutating set { Associator(base).setAssociated(key, newValue) }
+        get { getter() }
+        nonmutating set { setter(newValue) }
     }
     
-    public init(base: AnyObject, key: String, wrappedValue: @escaping @autoclosure () -> Value) {
-        self.base = base
-        self.key = key
-        self.initialValue = wrappedValue
+    public init(wrappedValue: Value) {
+        var wrappedValue = wrappedValue
+        getter = { wrappedValue }
+        setter = { wrappedValue = $0 }
+    }
+    
+    public init(assciatedIn object: AnyObject, key: String, wrappedValue: Value) {
+        getter = { Associator(object).getAssociated(key, initialValue: wrappedValue) }
+        setter = { Associator(object).setAssociated(key, $0) }
+    }
+    
+    public init<Object: AnyObject>(in object: Object, of keyPath: ReferenceWritableKeyPath<Object, Value>) {
+        getter = { object[keyPath: keyPath] }
+        setter = { object[keyPath: keyPath] = $0 }
     }
 }
 
-
-public extension WrappedInClass where Value: DefaultInitializable {
-    convenience init() {
-        self.init(wrappedValue: .init())
-    }
-}
-
-public extension WrappedInAssociated where Value: DefaultInitializable {
-    init(base: AnyObject, key: String) {
-        self.base = base
-        self.key = key
-        self.initialValue = { .init() }
+public extension Referance where Value: DefaultInitializable {
+    init(assciatedIn object: AnyObject, key: String) {
+        self.init(assciatedIn: object, key: key, wrappedValue: .init())
     }
 }

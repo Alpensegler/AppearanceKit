@@ -30,7 +30,7 @@ public extension DynamicAppearanceType where Self: AnyObject, DynamicAppearanceB
     ) {
         let value = AppearanceTrait()[keyPath: keyPath].defaultValue
         self.init(dynamicAppearanceBase: provider(value))
-        dynamicAppearanceProvider = (keyPath, { ($0 as? Value).map(provider) })
+        dynamicAppearanceProvider = (keyPath.hashValue, { ($0 as? Value).map(provider) })
     }
     
     init(
@@ -49,7 +49,7 @@ public extension DynamicAppearanceType where Self: AnyObject, DynamicAppearanceB
     
     func resolved<Base>(for appearance: Appearance<Base>) -> DynamicAppearanceBase? {
         guard let (key, provider) = dynamicAppearanceProvider,
-            let value = appearance.changingTrait[key]?.0,
+            let value = appearance.changingTrait[key]?.value,
             var provided = provider(value) as? DynamicAppearanceBase
         else {
             let result = customResolved(for: appearance)
@@ -68,7 +68,7 @@ public extension DynamicAppearanceType where Self: AnyObject, DynamicAppearanceB
         nonmutating set { Associator(self).setAssociated("dynamicColorProvider", newValue) }
     }
     
-    var dynamicAppearanceProvider: (key: AnyHashable, provider: (AnyHashable) -> AnyObject?)? {
+    var dynamicAppearanceProvider: (key: Int, provider: (AnyHashable) -> AnyObject?)? {
         get { Associator(self).getAssociated("dynamicAppearanceProvider") }
         nonmutating set { Associator(self).setAssociated("dynamicAppearanceProvider", newValue) }
     }
