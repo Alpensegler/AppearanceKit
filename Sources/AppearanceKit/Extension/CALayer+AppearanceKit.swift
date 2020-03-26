@@ -15,8 +15,6 @@ extension CALayer: AppearanceTraitCollection {
                 $0.ap.update(trait, key: key)
             }
         }
-        setNeedsLayout()
-        setNeedsDisplay()
         update(to: appearance, &backgroundColor)
         update(to: appearance, &borderColor)
         update(to: appearance, &shadowColor)

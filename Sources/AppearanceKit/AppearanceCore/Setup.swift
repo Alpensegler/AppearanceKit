@@ -9,8 +9,9 @@ import UIKit
 
 public enum AppearanceManager {
     public static func setup() {
-        _ = UIView.swizzleForAppearanceOne
         _ = UIColor.swizzleForAppearanceOne
+        _ = UIView.swizzleForAppearanceOne
+        _ = UIImageView.swizzleImageForAppearanceOne
         _ = UIViewController.swizzleForAppearanceOne
     }
 }
