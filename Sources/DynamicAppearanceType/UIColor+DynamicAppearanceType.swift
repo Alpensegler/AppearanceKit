@@ -9,13 +9,12 @@ import UIKit
 
 extension UIColor: DynamicAppearanceType {
     public func customResolved<Base>(for appearance: Appearance<Base>) -> UIColor? {
-        return nil
-//        guard #available(iOS 13.0, *), let trait = appearance.traitCollection else { return nil }
-//        let value = dynamicColorProvider ?? self
-//        let color = value.resolvedColor(with: trait)
-//        guard color != self, let result = value.copy() as? UIColor else { return nil }
-//        result.dynamicColorProvider = dynamicColorProvider ?? self
-//        return result
+        guard #available(iOS 13.0, *), let trait = appearance.traitCollection else { return nil }
+        let value = dynamicColorProvider ?? self
+        let color = value.resolvedColor(with: trait)
+        guard color != self, let result = value.copy() as? UIColor else { return nil }
+        result.dynamicColorProvider = dynamicColorProvider ?? self
+        return result
     }
 }
 

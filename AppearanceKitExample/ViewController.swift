@@ -27,9 +27,9 @@ class ViewController: UIViewController {
         
         view.backgroundColor = UIColor(bindEnvironment: \.theme) {
             switch $0 {
-            case .blue: return .red
-            case .red: return .blue
-            case .green: return .green
+            case .blue: return .systemRed
+            case .red: return .systemBlue
+            case .green: return .systemGreen
             }
         }
         
@@ -38,14 +38,6 @@ class ViewController: UIViewController {
             target: self,
             action: #selector(refresh)
         )
-        
-        print(ap.theme)
-        print(ap.theme)
-    }
-    
-    var assciatedValue: Int {
-        get { getAssociated(\.assciatedValue) }
-        set { setAssociated(\.assciatedValue, newValue) }
     }
     
     @objc private func refresh() {

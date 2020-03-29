@@ -9,7 +9,6 @@ Pod::Spec.new do |spec|
   spec.ios.deployment_target = '10.0'
   spec.author = { "Frain" => "frainl@outlook.com" }
   spec.source = { :git => "" }
-  spec.source_files  = "**/*.{h,m,swift}"
-  spec.exclude_files = ['Tests', 'AppearanceKitDemo', 'Package.swift']
+  spec.source_files  = "Sources/AppearanceKit/*.{h,m,swift}"
 
 end
