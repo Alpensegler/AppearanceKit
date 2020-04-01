@@ -12,8 +12,8 @@ public protocol DynamicAppearanceType {
         where DynamicAppearanceBase.DynamicAppearanceBase == DynamicAppearanceBase
     init(dynamicAppearanceBase: DynamicAppearanceBase)
     
-    init<Value>(
-        bindEnvironment keyPath: KeyPath<AppearanceTrait, AppearanceTrait.EnvironmentValue<Value>>,
+    init<Value, Attribute>(
+        bindEnvironment keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
         by provider: @escaping (Value) -> DynamicAppearanceBase
     )
     
@@ -24,23 +24,23 @@ public protocol DynamicAppearanceType {
 public extension DynamicAppearanceType where Self: AnyObject, DynamicAppearanceBase == Self {
     init(dynamicAppearanceBase: DynamicAppearanceBase) { self = dynamicAppearanceBase }
     
-    init<Value>(
-        bindEnvironment keyPath: KeyPath<AppearanceTrait, AppearanceTrait.EnvironmentValue<Value>>,
+    init<Value, Attribute>(
+        bindEnvironment keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
         by provider: @escaping (Value) -> DynamicAppearanceBase
     ) {
-        let value = AppearanceTrait()[keyPath: keyPath].defaultValue
+        let value = AppearanceTrait()[keyPath: keyPath].value
         self.init(dynamicAppearanceBase: provider(value))
         dynamicAppearanceProvider = (keyPath.hashValue, { ($0 as? Value).map(provider) })
     }
-    
-    init(
-        bindEnvironment keyPath: KeyPath<AppearanceTrait, AppearanceTrait.EnvironmentValue<Bool>>,
+
+    init<Attribute>(
+        bindEnvironment keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Bool, Attribute>>,
         trueAppearance: DynamicAppearanceBase,
         falseAppearance: DynamicAppearanceBase
     ) {
         self.init(bindEnvironment: keyPath) { $0 ? trueAppearance : falseAppearance }
     }
-    
+
     init(lightAppearance: DynamicAppearanceBase, darkAppearance: DynamicAppearanceBase) {
         self.init(bindEnvironment: \.isUserInterfaceDark, trueAppearance: lightAppearance, falseAppearance: darkAppearance)
     }
@@ -49,7 +49,7 @@ public extension DynamicAppearanceType where Self: AnyObject, DynamicAppearanceB
     
     func resolved<Base>(for appearance: Appearance<Base>) -> DynamicAppearanceBase? {
         guard let (key, provider) = dynamicAppearanceProvider,
-            let value = appearance.changingTrait[key]?.value,
+            let value = appearance.traits.changingTrait[key]?.environment.value,
             var provided = provider(value) as? DynamicAppearanceBase
         else {
             let result = customResolved(for: appearance)
@@ -62,7 +62,7 @@ public extension DynamicAppearanceType where Self: AnyObject, DynamicAppearanceB
     }
 }
 
-public extension DynamicAppearanceType where Self: AnyObject, DynamicAppearanceBase == Self {
+public extension DynamicAppearanceType where Self: AnyObject {
     var dynamicColorProvider: UIColor? {
         get { Associator(self).getAssociated("dynamicColorProvider") }
         nonmutating set { Associator(self).setAssociated("dynamicColorProvider", newValue) }

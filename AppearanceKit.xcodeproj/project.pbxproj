@@ -44,8 +44,8 @@
 		F3C376CA2430184C00AE3677 /* UIBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A42430184C00AE3677 /* UIBindable.swift */; };
 		F3C376CB2430184C00AE3677 /* BindableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A52430184C00AE3677 /* BindableProperty.swift */; };
 		F3C376CC2430184C00AE3677 /* AppearanceTrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A62430184C00AE3677 /* AppearanceTrait.swift */; };
-		F3C376CD2430184C00AE3677 /* AppearanceTraitCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A72430184C00AE3677 /* AppearanceTraitCollection.swift */; };
-		F3C376CE2430184C00AE3677 /* Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A82430184C00AE3677 /* Setup.swift */; };
+		F3C376CD2430184C00AE3677 /* AppearanceEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A72430184C00AE3677 /* AppearanceEnvironment.swift */; };
+		F3C376CE2430184C00AE3677 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A82430184C00AE3677 /* AppearanceManager.swift */; };
 		F3C376CF2430184C00AE3677 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A92430184C00AE3677 /* Appearance.swift */; };
 		F3C376D02430184C00AE3677 /* UIImage+DynamicAppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376AB2430184C00AE3677 /* UIImage+DynamicAppearanceType.swift */; };
 		F3C376D12430184C00AE3677 /* NSAttributedString+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376AC2430184C00AE3677 /* NSAttributedString+AppearanceKit.swift */; };
@@ -133,8 +133,8 @@
 		F3C376A42430184C00AE3677 /* UIBindable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBindable.swift; sourceTree = "<group>"; };
 		F3C376A52430184C00AE3677 /* BindableProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindableProperty.swift; sourceTree = "<group>"; };
 		F3C376A62430184C00AE3677 /* AppearanceTrait.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceTrait.swift; sourceTree = "<group>"; };
-		F3C376A72430184C00AE3677 /* AppearanceTraitCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceTraitCollection.swift; sourceTree = "<group>"; };
-		F3C376A82430184C00AE3677 /* Setup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setup.swift; sourceTree = "<group>"; };
+		F3C376A72430184C00AE3677 /* AppearanceEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceEnvironment.swift; sourceTree = "<group>"; };
+		F3C376A82430184C00AE3677 /* AppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
 		F3C376A92430184C00AE3677 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		F3C376AB2430184C00AE3677 /* UIImage+DynamicAppearanceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+DynamicAppearanceType.swift"; sourceTree = "<group>"; };
 		F3C376AC2430184C00AE3677 /* NSAttributedString+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+AppearanceKit.swift"; sourceTree = "<group>"; };
@@ -227,8 +227,8 @@
 			children = (
 				F3C376A92430184C00AE3677 /* Appearance.swift */,
 				F3C376A62430184C00AE3677 /* AppearanceTrait.swift */,
-				F3C376A72430184C00AE3677 /* AppearanceTraitCollection.swift */,
-				F3C376A82430184C00AE3677 /* Setup.swift */,
+				F3C376A72430184C00AE3677 /* AppearanceEnvironment.swift */,
+				F3C376A82430184C00AE3677 /* AppearanceManager.swift */,
 				F3C376A52430184C00AE3677 /* BindableProperty.swift */,
 				F3C376A42430184C00AE3677 /* UIBindable.swift */,
 			);
@@ -466,10 +466,10 @@
 				F3C376D42430184C00AE3677 /* NSTextAttachment+DynamicAppearanceType.swift in Sources */,
 				F3C376C22430184C00AE3677 /* UIScrollView+AppearanceKit.swift in Sources */,
 				F3C376BA2430184C00AE3677 /* UIView+AppearanceKit.swift in Sources */,
-				F3C376CE2430184C00AE3677 /* Setup.swift in Sources */,
+				F3C376CE2430184C00AE3677 /* AppearanceManager.swift in Sources */,
 				F3C376C02430184C00AE3677 /* UILabel+AppearanceKit.swift in Sources */,
 				F3C376B82430184C00AE3677 /* UISlider+AppearanceKit.swift in Sources */,
-				F3C376CD2430184C00AE3677 /* AppearanceTraitCollection.swift in Sources */,
+				F3C376CD2430184C00AE3677 /* AppearanceEnvironment.swift in Sources */,
 				F3C376BB2430184C00AE3677 /* UIImageView+AppearanceKit.swift in Sources */,
 				F3C376D52430184C00AE3677 /* CGColor+DynamicAppearanceType.swift in Sources */,
 				F3C376C72430184C00AE3677 /* UINavigationBar+AppearanceKit.swift in Sources */,

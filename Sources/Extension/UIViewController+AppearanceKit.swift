@@ -7,36 +7,43 @@
 
 import UIKit
 
-extension UIViewController: AppearanceTraitCollection {
+extension UIViewController: AppearanceEnvironment {
     @objc open func configureAppearance() {
-        setNeedsStatusBarAppearanceUpdate()
         let appearance = ap
-        for (key, trait) in appearance.changingTrait where trait.environment.throughHierarchy {
-            presentedViewController?.ap.update(trait, key: key)
-            children.forEach { $0.ap.update(trait, key: key) }
-            if isViewLoaded {
-                view.ap.update(trait, key: key)
-            }
-        }
+        appearance.setConfigureOnce()
+        appearance.setTraitCollection(traitCollection)
     }
 }
 
 extension UIViewController {
     static let swizzleForAppearanceOne: Void = {
         swizzle(selector: #selector(traitCollectionDidChange(_:)), to: #selector(__traitCollectionDidChange(_:)))
-        swizzle(selector: #selector(addChild(_:)), to: #selector(__addChild(_:)))
+        swizzle(selector: #selector(didMove(toParent:)), to: #selector(__didMove(toParent:)))
     }()
+    
+    @objc override func configureAppearanceChange() {
+        configureAppearance()
+        _updateAppearance(traits: traits.changingTrait, exceptSelf: true)
+    }
     
     @objc func __traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         __traitCollectionDidChange(previousTraitCollection)
-        ap.updateWithTraitCollection(traitCollection)
+        if ap.didConfigureOnce { _updateAppearance() }
     }
     
-    @objc func __addChild(_ childController: UIViewController) {
-        __addChild(childController)
-        let appearance = ap
-        for (key, trait) in appearance.changingTrait where trait.environment.throughHierarchy {
-            childController.ap.update(trait, key: key)
+    @objc func __didMove(toParent: UIViewController?) {
+        __didMove(toParent: toParent)
+        guard let parent = toParent else { return }
+        _updateAppearance(traits: parent.traits.traits, configOnceIfNeeded: true)
+    }
+    
+    func _updateAppearance(traits: [Int: Traits<Void>.Value]? = nil, exceptSelf: Bool = false, configOnceIfNeeded: Bool = false) {
+        if !exceptSelf { ap.update(traits: traits, traitCollection: traitCollection, configOnceIfNeeded: configOnceIfNeeded) }
+        guard let traits = traits else { return }
+        presentedViewController?._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded)
+        children.forEach { $0._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded) }
+        if isViewLoaded {
+            view._updateAppearance(traits: traits)
         }
     }
 }

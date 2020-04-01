@@ -5,7 +5,7 @@
 //  Created by Frain on 2020/3/25.
 //
 
-public final class BindableProperty<Root: AppearanceTraitCollection, Value> {
+public final class BindableProperty<Root: AppearanceEnvironment, Value> {
     var root: Root
     let keyPath: WritableKeyPath<Root, Value>
     

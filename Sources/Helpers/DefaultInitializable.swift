@@ -19,6 +19,7 @@ extension Double: DefaultInitializable { }
 extension Float: DefaultInitializable { }
 extension Array: DefaultInitializable { }
 extension Dictionary: DefaultInitializable { }
+extension Set: DefaultInitializable { }
 extension Optional: DefaultInitializable {
     public init() { self = .none }
 }

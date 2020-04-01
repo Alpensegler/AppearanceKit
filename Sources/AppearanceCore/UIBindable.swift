@@ -13,7 +13,7 @@ public protocol UIBindable {
 
 @propertyWrapper
 public class UIState<Value>: UIBindable {
-    weak var component: AppearanceTraitCollection?
+    weak var component: AppearanceEnvironment?
     
     public var wrappedValue: Value
     

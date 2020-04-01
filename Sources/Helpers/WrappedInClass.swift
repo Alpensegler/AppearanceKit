@@ -15,14 +15,21 @@ public struct Referance<Value> {
         nonmutating set { setter(newValue) }
     }
     
-    public init(wrappedValue: Value) {
-        var wrappedValue = wrappedValue
-        getter = { wrappedValue }
-        setter = { wrappedValue = $0 }
+    public init(wrappedValue: @escaping @autoclosure () -> Value) {
+        var value: Value?
+        func getValue() -> Value {
+            value ?? {
+                let actualValue = wrappedValue()
+                value = actualValue
+                return actualValue
+            }()
+        }
+        setter = { value = $0 }
+        getter = { getValue() }
     }
     
-    public init(assciatedIn object: AnyObject, key: String, wrappedValue: Value) {
-        getter = { Associator(object).getAssociated(key, initialValue: wrappedValue) }
+    public init(assciatedIn object: AnyObject, key: String, wrappedValue: @escaping @autoclosure () -> Value) {
+        getter = { Associator(object).getAssociated(key, initialValue: wrappedValue()) }
         setter = { Associator(object).setAssociated(key, $0) }
     }
     

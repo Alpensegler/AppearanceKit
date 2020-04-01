@@ -9,7 +9,7 @@ import ObjectiveC.runtime
 
 public protocol Associatable: class { }
 
-public struct Associator<Object: AnyObject> {
+public struct Associator {
     public enum Policy {
         case assign
         case retain
@@ -25,11 +25,11 @@ public struct Associator<Object: AnyObject> {
         }
     }
     
-    let object: Object
+    let object: AnyObject
 }
 
 public extension Associator {
-    init(_ object: Object) {
+    init(_ object: AnyObject) {
         self.object = object
     }
     
@@ -60,27 +60,27 @@ public extension Associator {
 }
 
 public extension Associatable {
-    func getAssociated<T: DefaultInitializable>(_ key: String, policy: Associator<Self>.Policy = .retain) -> T {
+    func getAssociated<T: DefaultInitializable>(_ key: String, policy: Associator.Policy = .retain) -> T {
         Associator(self).getAssociated(key, policy: policy)
     }
     
-    func getAssociated<T>(_ key: String, policy: Associator<Self>.Policy = .retain, initialValue: @autoclosure () -> T) -> T {
+    func getAssociated<T>(_ key: String, policy: Associator.Policy = .retain, initialValue: @autoclosure () -> T) -> T {
         Associator(self).getAssociated(key, policy: policy, initialValue: initialValue())
     }
     
-    func setAssociated<T>(_ key: String, _ newValue: T?, policy: Associator<Self>.Policy = .retain) {
+    func setAssociated<T>(_ key: String, _ newValue: T?, policy: Associator.Policy = .retain) {
         Associator(self).setAssociated(key, newValue, policy: policy)
     }
     
-    func getAssociated<T: DefaultInitializable>(_ keyPath: KeyPath<Self, T>, policy: Associator<Self>.Policy = .retain) -> T {
+    func getAssociated<T: DefaultInitializable>(_ keyPath: KeyPath<Self, T>, policy: Associator.Policy = .retain) -> T {
         Associator(self).getAssociated(keyPath, policy: policy)
     }
     
-    func getAssociated<T>(_ keyPath: KeyPath<Self, T>, policy: Associator<Self>.Policy = .retain, initialValue: @autoclosure () -> T) -> T {
+    func getAssociated<T>(_ keyPath: KeyPath<Self, T>, policy: Associator.Policy = .retain, initialValue: @autoclosure () -> T) -> T {
         Associator(self).getAssociated(keyPath, policy: policy, initialValue: initialValue())
     }
     
-    func setAssociated<T>(_ keyPath: KeyPath<Self, T>, _ newValue: T?, policy: Associator<Self>.Policy = .retain) {
+    func setAssociated<T>(_ keyPath: KeyPath<Self, T>, _ newValue: T?, policy: Associator.Policy = .retain) {
         Associator(self).setAssociated(keyPath, newValue, policy: policy)
     }
 }

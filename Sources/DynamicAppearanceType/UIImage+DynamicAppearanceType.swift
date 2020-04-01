@@ -9,7 +9,7 @@ import UIKit
 
 extension UIImage: DynamicAppearanceType {
     public func customResolved<Base>(for appearance: Appearance<Base>) -> UIImage? {
-        guard let trait = appearance.traitCollection else { return nil }
-        return imageAsset?.image(with: trait)
+        guard let traitCollection = appearance.traitCollection else { return nil }
+        return imageAsset?.image(with: traitCollection)
     }
 }

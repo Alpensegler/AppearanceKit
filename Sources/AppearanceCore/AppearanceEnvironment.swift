@@ -7,15 +7,15 @@
 
 import UIKit
 
-public protocol AppearanceTraitCollection: AnyObject {
+public protocol AppearanceEnvironment: NSObject {
     func configureAppearance()
 }
 
-public extension AppearanceTraitCollection {
+public extension AppearanceEnvironment {
     var ap: Appearance<Self> { .init(self) }
 }
 
-public extension AppearanceTraitCollection {
+public extension AppearanceEnvironment {
     func update<Base, Value>(to appearance: Appearance<Base>, _ getter: Value?, _ setter: (Value?) -> Void)
     where Value: DynamicAppearanceType, Value.DynamicAppearanceBase == Value {
         if let resolved = getter?.resolved(for: appearance) {
@@ -27,4 +27,12 @@ public extension AppearanceTraitCollection {
     where Value: DynamicAppearanceType, Value.DynamicAppearanceBase == Value {
         update(to: appearance, dynamicAppearanceType) { dynamicAppearanceType = $0 }
     }
+}
+
+extension AppearanceEnvironment {
+    var traits: Traits<Void> { ap.traits }
+}
+
+extension NSObject {
+    @objc func configureAppearanceChange() { }
 }
