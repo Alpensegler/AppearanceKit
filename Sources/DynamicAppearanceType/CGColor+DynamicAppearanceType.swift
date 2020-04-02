@@ -9,6 +9,14 @@ import UIKit
 
 extension CGColor: DynamicAppearanceType {
     public func customResolved<Base>(for appearance: Appearance<Base>) -> CGColor? {
-        dynamicColorProvider?.customResolved(for: appearance)?.cgColor
+        guard let cgColor = dynamicColorProvider?.customResolved(for: appearance)?.cgColor else { return nil }
+        cgColor.dynamicColorProvider = dynamicColorProvider
+        return cgColor
     }
+    
+    var dynamicColorProvider: UIColor? {
+        get { Associator(self).getAssociated("dynamicColorProvider") }
+        set { Associator(self).setAssociated("dynamicColorProvider", newValue) }
+    }
+    
 }

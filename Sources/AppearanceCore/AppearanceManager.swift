@@ -11,6 +11,7 @@ public enum AppearanceManager {
     public static func setup() {
         _ = UIColor.swizzleForAppearanceOne
         _ = UIView.swizzleForAppearanceOne
+        _ = UIWindow.swizzleWindowForAppearanceOne
         _ = UIImageView.swizzleImageForAppearanceOne
         _ = CALayer.swizzleForAppearanceOne
         _ = UIViewController.swizzleForAppearanceOne

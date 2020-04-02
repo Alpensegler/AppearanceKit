@@ -17,13 +17,6 @@ enum Theme: CaseIterable {
     static let `default` = Theme.allCases.randomElement()!
 }
 
-class CustomLayer: CALayer {
-    override func configureAppearance() {
-        super.configureAppearance()
-        
-    }
-}
-
 extension AppearanceTrait {
     var theme: StoredEnvironment<Theme> { .init(defaultValue: .default) }
 }
@@ -31,10 +24,6 @@ extension AppearanceTrait {
 class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if #available(iOS 13.0, *) {
-            overrideUserInterfaceStyle = .dark
-        }
         
         view.backgroundColor = UIColor(bindEnvironment: \.theme) {
             switch $0 {
@@ -44,8 +33,9 @@ class ViewController: UIViewController {
             }
         }
 
-        let layer = CustomLayer()
-        layer.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
+        let layer = CALayer()
+        layer.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
+        layer.position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
         if #available(iOS 13.0, *) {
             let color = UIColor.label.cgColor
 
@@ -61,6 +51,10 @@ class ViewController: UIViewController {
             target: self,
             action: #selector(refresh)
         )
+    }
+    
+    override func configureAppearance() {
+        super.configureAppearance()
     }
     
     @objc private func refresh() {

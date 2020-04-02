@@ -30,7 +30,7 @@ extension CALayer {
     
     @objc func __addSublayer(_ layer: CALayer) {
         __addSublayer(layer)
-        guard let traitCollection = ap.traitCollection else { return }
+        guard let traitCollection = ap.traitCollection, ap.didConfigureOnce else { return }
         layer._updateAppearance(traits: traits.traits, traitCollection, configOnceIfNeeded: true)
     }
     
@@ -41,8 +41,8 @@ extension CALayer {
         configOnceIfNeeded: Bool = false
     ) {
         if !exceptSelf { ap.update(traits: traits, traitCollection: traitCollection, configOnceIfNeeded: configOnceIfNeeded) }
-        sublayers?.filter { $0.delegate != nil }.forEach {
-            $0._updateAppearance(traits: traits, traitCollection)
+        sublayers?.filter { $0.delegate == nil }.forEach {
+            $0._updateAppearance(traits: traits, traitCollection, configOnceIfNeeded: configOnceIfNeeded)
         }
     }
 }

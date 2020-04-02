@@ -30,7 +30,6 @@ extension UIView {
         _updateAppearance(traits: traits.changingTrait, exceptSelf: true)
     }
     
-    @objc var hierachyForUpdate: [UIView] { subviews }
     @objc var viewControllerForUpdate: UIViewController? { nil }
     
     @objc func _traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -40,7 +39,7 @@ extension UIView {
     
     @objc func __didMoveToSuperView() {
         __didMoveToSuperView()
-        guard let superview = superview else { return }
+        guard let superview = superview, superview.ap.didConfigureOnce else { return }
         _updateAppearance(traits: superview.traits.traits, configOnceIfNeeded: true)
     }
     
@@ -62,8 +61,8 @@ extension UIView {
         if !exceptSelf { ap.update(traits: traits, traitCollection: traitCollection, configOnceIfNeeded: configOnceIfNeeded) }
         layer._updateAppearance(traits: traits, traitCollection, configOnceIfNeeded: configOnceIfNeeded)
         guard let traits = traits else { return }
-        hierachyForUpdate.forEach { $0._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded) }
-        viewControllerForUpdate?._updateAppearance(traits: traits)
+        subviews.forEach { $0._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded) }
+        viewControllerForUpdate?._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded)
     }
     
     var _dynamicBackgroundColor: UIColor? {

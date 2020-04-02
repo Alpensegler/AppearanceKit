@@ -24,8 +24,16 @@ public struct Appearance<Base: AppearanceEnvironment> {
     let base: Base
 }
 
-extension Appearance: CustomStringConvertible {
-    public var description: String { "\(traits)" }
+protocol AppearanceType {
+    subscript<Value: Hashable, Attribute>(
+        keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>
+    ) -> Value { get }
+}
+
+extension Appearance: CustomStringConvertible, CustomDebugStringConvertible, AppearanceType {
+    public var description: String { "\(traits)\n\(uiTraits)" }
+    
+    public var debugDescription: String { description }
 }
 
 public extension Appearance {
@@ -102,12 +110,25 @@ extension Appearance {
         self._didConfigureOnce = .init(assciatedIn: base, key: "AppearanceKit.didConfigureOnce")
     }
     
+    subscript<Value: Hashable, Attribute>(
+        keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>
+    ) -> Value {
+        switch keyPath {
+        case let keyPath as KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Void>>:
+            return self[dynamicMember: keyPath]
+        case let keyPath as KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, (UITraitCollection) -> Value>>:
+            return self[dynamicMember: keyPath]
+        default:
+            fatalError("not supported environment type \(keyPath)")
+        }
+    }
+    
     func setConfigureOnce() {
         didConfigureOnce = true
     }
     
-    func configureAppearance(force: Bool = false) {
-        force ? base.configureAppearance() : base.configureAppearanceChange()
+    func configureAppearance(currentOnly: Bool = false) {
+        currentOnly ? base.configureAppearance() : base.configureAppearanceChange()
         traits.changingTrait.removeAll()
         uiTraits.changingTrait.removeAll()
     }
@@ -130,10 +151,8 @@ extension Appearance {
             hasChange = setTraitCollection(traitCollection) || hasChange
         }
         
-        if configOnceIfNeeded, !didConfigureOnce {
-            configureAppearance(force: true)
-        } else if hasChange {
-            configureAppearance()
+        if hasChange || (configOnceIfNeeded && !didConfigureOnce) {
+            configureAppearance(currentOnly: true)
         }
     }
     
@@ -146,8 +165,9 @@ extension Appearance {
         for (key, trait) in uiTraits.traits {
             let triatValue = trait.environment.attribute(traitCollection)
             guard triatValue != trait.environment.value else { continue }
-            uiTraits.traits[key] = trait
-            uiTraits.changingTrait[key] = trait
+            let result: Traits<(UITraitCollection) -> AnyHashable>.Value = (trait.used, .init(defaultValue: triatValue, from: trait.environment.attribute))
+            uiTraits.traits[key] = result
+            uiTraits.changingTrait[key] = result
             hasChange = true
         }
         return hasChange

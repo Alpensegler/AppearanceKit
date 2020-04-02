@@ -23,7 +23,7 @@ extension UIViewController {
     
     @objc override func configureAppearanceChange() {
         configureAppearance()
-        _updateAppearance(traits: traits.changingTrait, exceptSelf: true)
+        _updateAppearance(traits: traits.changingTrait, exceptSelf: true, configView: true)
     }
     
     @objc func __traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -33,17 +33,15 @@ extension UIViewController {
     
     @objc func __didMove(toParent: UIViewController?) {
         __didMove(toParent: toParent)
-        guard let parent = toParent else { return }
+        guard let parent = toParent, parent.ap.didConfigureOnce else { return }
         _updateAppearance(traits: parent.traits.traits, configOnceIfNeeded: true)
     }
     
-    func _updateAppearance(traits: [Int: Traits<Void>.Value]? = nil, exceptSelf: Bool = false, configOnceIfNeeded: Bool = false) {
+    func _updateAppearance(traits: [Int: Traits<Void>.Value]? = nil, exceptSelf: Bool = false, configOnceIfNeeded: Bool = false, configView: Bool = false) {
         if !exceptSelf { ap.update(traits: traits, traitCollection: traitCollection, configOnceIfNeeded: configOnceIfNeeded) }
         guard let traits = traits else { return }
-        presentedViewController?._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded)
-        children.forEach { $0._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded) }
-        if isViewLoaded {
-            view._updateAppearance(traits: traits)
-        }
+        presentedViewController?._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded, configView: configView)
+        children.forEach { $0._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded, configView: configView) }
+        if isViewLoaded, configView { view._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded) }
     }
 }
