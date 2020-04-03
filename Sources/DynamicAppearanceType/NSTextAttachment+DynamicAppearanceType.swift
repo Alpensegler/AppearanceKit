@@ -8,14 +8,25 @@
 import UIKit
 
 extension NSTextAttachment: DynamicAppearanceType {
-    public func customResolved<Base>(for appearance: Appearance<Base>) -> NSTextAttachment? {
-        guard let resolvedImage = image?.resolved(for: appearance) else { return nil }
-        let result = NSTextAttachment()
-        result.contents = contents
-        result.fileType = fileType
-        result.fileWrapper = fileWrapper
-        result.bounds = bounds
-        result.image = resolvedImage
-        return result
+    var dynamicProvider: DynamicProvider<NSTextAttachment>? {
+        get { getAssociated(\NSTextAttachment.dynamicProvider) }
+        set { setAssociated(\NSTextAttachment.dynamicProvider, newValue) }
+    }
+}
+
+public extension NSTextAttachment {
+    static func bindEnvironment<Value: Hashable, Attribute>(
+        _ keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
+        by provider: @escaping (Value) -> NSTextAttachment
+    ) -> NSTextAttachment {
+        let (resolved, dynamicProvider) = DynamicProvider.fromBind(keyPath, by: provider)
+        resolved.dynamicProvider = dynamicProvider
+        return resolved
+    }
+    
+    func resolved<Base: AppearanceEnvironment>(for appearance: Appearance<Base>) -> NSTextAttachment? {
+        guard let (resolved, dynamicProvider) = dynamicProvider?.resolved(for: appearance) else { return nil }
+        resolved.dynamicProvider = dynamicProvider
+        return resolved
     }
 }

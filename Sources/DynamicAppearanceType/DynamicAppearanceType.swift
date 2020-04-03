@@ -12,61 +12,72 @@ public protocol DynamicAppearanceType {
         where DynamicAppearanceBase.DynamicAppearanceBase == DynamicAppearanceBase
     init(dynamicAppearanceBase: DynamicAppearanceBase)
     
-    init<Value, Attribute>(
-        bindEnvironment keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
+    static func bindEnvironment<Value, Attribute>(
+        _ keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
         by provider: @escaping (Value) -> DynamicAppearanceBase
-    )
+    ) -> DynamicAppearanceBase
     
-    func customResolved<Base>(for appearance: Appearance<Base>) -> DynamicAppearanceBase?
     func resolved<Base>(for appearance: Appearance<Base>) -> DynamicAppearanceBase?
 }
 
 public extension DynamicAppearanceType where Self: AnyObject, DynamicAppearanceBase == Self {
     init(dynamicAppearanceBase: DynamicAppearanceBase) { self = dynamicAppearanceBase }
-    
-    init<Value, Attribute>(
-        bindEnvironment keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
-        by provider: @escaping (Value) -> DynamicAppearanceBase
-    ) {
-        let environment = AppearanceTrait()[keyPath: keyPath]
-        self.init(dynamicAppearanceBase: provider(environment.value))
-        dynamicAppearanceProvider = (keyPath.hashValue, { provider($0[keyPath]) })
-    }
 
     init<Attribute>(
         bindEnvironment keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Bool, Attribute>>,
-        trueAppearance: DynamicAppearanceBase,
-        falseAppearance: DynamicAppearanceBase
+        trueAppearance: @escaping @autoclosure () -> DynamicAppearanceBase,
+        falseAppearance: @escaping @autoclosure () -> DynamicAppearanceBase
     ) {
-        self.init(bindEnvironment: keyPath) { $0 ? trueAppearance : falseAppearance }
+        self.init(dynamicAppearanceBase: .bindEnvironment(keyPath) {
+            let trueAppearance = Referance(wrappedValue: trueAppearance())
+            let falseAppearance = Referance(wrappedValue: falseAppearance())
+            return $0 ? trueAppearance.wrappedValue : falseAppearance.wrappedValue
+        })
     }
 
-    init(lightAppearance: DynamicAppearanceBase, darkAppearance: DynamicAppearanceBase) {
-        self.init(bindEnvironment: \.isUserInterfaceDark, trueAppearance: lightAppearance, falseAppearance: darkAppearance)
-    }
-    
-    func customResolved<Base>(for appearance: Appearance<Base>) -> DynamicAppearanceBase? { nil }
-    
-    func resolved<Base>(for appearance: Appearance<Base>) -> DynamicAppearanceBase? {
-        guard let (key, provider) = dynamicAppearanceProvider,
-            appearance.traits.changingTrait[key] != nil || appearance.traits.traits[key] == nil
-        else {
-            let result = customResolved(for: appearance)
-            result?.dynamicAppearanceProvider = dynamicAppearanceProvider
-            return result
-        }
-        let shouldReturnNil = appearance.traits.traits[key] == nil
-        let provided = provider(appearance)
-        let result = provided.customResolved(for: appearance) ?? (shouldReturnNil ? nil : provided)
-        result?.dynamicAppearanceProvider = dynamicAppearanceProvider
-        return result
+    init(lightAppearance: @escaping @autoclosure () -> DynamicAppearanceBase, darkAppearance: @escaping @autoclosure () -> DynamicAppearanceBase) {
+        self.init(bindEnvironment: \.isUserInterfaceDark, trueAppearance: darkAppearance(), falseAppearance: lightAppearance())
     }
 }
 
-extension DynamicAppearanceType where Self: AnyObject {
-    var dynamicAppearanceProvider: (key: Int, provider: (AppearanceType) -> DynamicAppearanceBase)? {
-        get { Associator(self).getAssociated("dynamicAppearanceProvider") }
-        nonmutating set { Associator(self).setAssociated("dynamicAppearanceProvider", newValue) }
+struct DynamicProvider<DynamicAppearanceBase> {
+    var key: Int
+    var value: AnyHashable
+    var provider: (AnyHashable) -> DynamicAppearanceBase
+    var getValue: (AppearanceType, AnyHashable) -> AnyHashable?
+    
+    func resolved<Base: AppearanceEnvironment>(for appearance: Appearance<Base>) -> (DynamicAppearanceBase, DynamicProvider<DynamicAppearanceBase>)? {
+        guard let value = getValue(appearance, value) else { return nil }
+        return (provider(value), DynamicProvider(key: key, value: value, provider: provider, getValue: getValue))
+    }
+    
+    static func fromBind<Value: Hashable, Attribute>(
+        _ keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
+        by provider: @escaping (Value) -> DynamicAppearanceBase
+    ) -> (DynamicAppearanceBase, DynamicProvider<DynamicAppearanceBase>) {
+        let environment = AppearanceTrait()[keyPath: keyPath]
+        let value = environment.value
+        return (provider(value), DynamicProvider(key: keyPath.hashValue, value: value, provider: { provider($0 as! Value) }, getValue: { $0[keyPath, notEqualTo: $1] }))
+    }
+}
+
+struct StoredDynamicProvider<DynamicAppearanceBase> {
+    var resolved: DynamicAppearanceBase
+    var provider: DynamicProvider<DynamicAppearanceBase>
+}
+
+extension StoredDynamicProvider {
+    init<Value: Hashable, Attribute>(
+        _ keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
+        by provider: @escaping (Value) -> DynamicAppearanceBase
+    ) {
+        let (resolved, provider) = DynamicProvider<DynamicAppearanceBase>.fromBind(keyPath, by: provider)
+        self.init(resolved: resolved, provider: provider)
+    }
+    
+    func resolved<Base: AppearanceEnvironment>(for appearance: Appearance<Base>) -> StoredDynamicProvider<DynamicAppearanceBase>? {
+        guard let (resolved, provider) = provider.resolved(for: appearance) else { return nil }
+        return .init(resolved: resolved, provider: provider)
     }
 }
 

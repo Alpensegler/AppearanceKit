@@ -21,10 +21,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		F31732C12436C02100052424 /* NSTextAttachment+DynamicAppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31732C02436C02100052424 /* NSTextAttachment+DynamicAppearanceType.swift */; };
 		F3C376B62430184C00AE3677 /* UITabBar+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3768F2430184C00AE3677 /* UITabBar+AppearanceKit.swift */; };
 		F3C376B72430184C00AE3677 /* UITextField+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376902430184C00AE3677 /* UITextField+AppearanceKit.swift */; };
 		F3C376B82430184C00AE3677 /* UISlider+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376912430184C00AE3677 /* UISlider+AppearanceKit.swift */; };
-		F3C376B92430184C00AE3677 /* CATextLayer+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376922430184C00AE3677 /* CATextLayer+AppearanceKit.swift */; };
 		F3C376BA2430184C00AE3677 /* UIView+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376932430184C00AE3677 /* UIView+AppearanceKit.swift */; };
 		F3C376BB2430184C00AE3677 /* UIImageView+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376942430184C00AE3677 /* UIImageView+AppearanceKit.swift */; };
 		F3C376BC2430184C00AE3677 /* UIButton+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376952430184C00AE3677 /* UIButton+AppearanceKit.swift */; };
@@ -39,7 +39,6 @@
 		F3C376C52430184C00AE3677 /* UIPageControl+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3769E2430184C00AE3677 /* UIPageControl+AppearanceKit.swift */; };
 		F3C376C62430184C00AE3677 /* UIViewController+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3769F2430184C00AE3677 /* UIViewController+AppearanceKit.swift */; };
 		F3C376C72430184C00AE3677 /* UINavigationBar+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A02430184C00AE3677 /* UINavigationBar+AppearanceKit.swift */; };
-		F3C376C82430184C00AE3677 /* CAGradientLayer+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A12430184C00AE3677 /* CAGradientLayer+AppearanceKit.swift */; };
 		F3C376C92430184C00AE3677 /* UIToolBar+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A22430184C00AE3677 /* UIToolBar+AppearanceKit.swift */; };
 		F3C376CA2430184C00AE3677 /* UIBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A42430184C00AE3677 /* UIBindable.swift */; };
 		F3C376CB2430184C00AE3677 /* BindableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376A52430184C00AE3677 /* BindableProperty.swift */; };
@@ -51,7 +50,6 @@
 		F3C376D12430184C00AE3677 /* NSAttributedString+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376AC2430184C00AE3677 /* NSAttributedString+AppearanceKit.swift */; };
 		F3C376D22430184C00AE3677 /* UIColor+DynamicAppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376AD2430184C00AE3677 /* UIColor+DynamicAppearanceType.swift */; };
 		F3C376D32430184C00AE3677 /* DynamicAppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376AE2430184C00AE3677 /* DynamicAppearanceType.swift */; };
-		F3C376D42430184C00AE3677 /* NSTextAttachment+DynamicAppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376AF2430184C00AE3677 /* NSTextAttachment+DynamicAppearanceType.swift */; };
 		F3C376D52430184C00AE3677 /* CGColor+DynamicAppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376B02430184C00AE3677 /* CGColor+DynamicAppearanceType.swift */; };
 		F3C376D62430184C00AE3677 /* Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376B22430184C00AE3677 /* Swizzle.swift */; };
 		F3C376D72430184C00AE3677 /* WrappedInClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376B32430184C00AE3677 /* WrappedInClass.swift */; };
@@ -110,10 +108,10 @@
 /* Begin PBXFileReference section */
 		"AppearanceKit::AppearanceKit::Product" /* AppearanceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AppearanceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"AppearanceKit::AppearanceKitTests::Product" /* AppearanceKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = AppearanceKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F31732C02436C02100052424 /* NSTextAttachment+DynamicAppearanceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextAttachment+DynamicAppearanceType.swift"; sourceTree = "<group>"; };
 		F3C3768F2430184C00AE3677 /* UITabBar+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBar+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C376902430184C00AE3677 /* UITextField+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C376912430184C00AE3677 /* UISlider+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISlider+AppearanceKit.swift"; sourceTree = "<group>"; };
-		F3C376922430184C00AE3677 /* CATextLayer+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CATextLayer+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C376932430184C00AE3677 /* UIView+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C376942430184C00AE3677 /* UIImageView+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C376952430184C00AE3677 /* UIButton+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+AppearanceKit.swift"; sourceTree = "<group>"; };
@@ -128,7 +126,6 @@
 		F3C3769E2430184C00AE3677 /* UIPageControl+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPageControl+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C3769F2430184C00AE3677 /* UIViewController+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C376A02430184C00AE3677 /* UINavigationBar+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+AppearanceKit.swift"; sourceTree = "<group>"; };
-		F3C376A12430184C00AE3677 /* CAGradientLayer+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C376A22430184C00AE3677 /* UIToolBar+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIToolBar+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C376A42430184C00AE3677 /* UIBindable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBindable.swift; sourceTree = "<group>"; };
 		F3C376A52430184C00AE3677 /* BindableProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindableProperty.swift; sourceTree = "<group>"; };
@@ -140,7 +137,6 @@
 		F3C376AC2430184C00AE3677 /* NSAttributedString+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C376AD2430184C00AE3677 /* UIColor+DynamicAppearanceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+DynamicAppearanceType.swift"; sourceTree = "<group>"; };
 		F3C376AE2430184C00AE3677 /* DynamicAppearanceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicAppearanceType.swift; sourceTree = "<group>"; };
-		F3C376AF2430184C00AE3677 /* NSTextAttachment+DynamicAppearanceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextAttachment+DynamicAppearanceType.swift"; sourceTree = "<group>"; };
 		F3C376B02430184C00AE3677 /* CGColor+DynamicAppearanceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGColor+DynamicAppearanceType.swift"; sourceTree = "<group>"; };
 		F3C376B22430184C00AE3677 /* Swizzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swizzle.swift; sourceTree = "<group>"; };
 		F3C376B32430184C00AE3677 /* WrappedInClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WrappedInClass.swift; sourceTree = "<group>"; };
@@ -214,9 +210,7 @@
 				F3C3769E2430184C00AE3677 /* UIPageControl+AppearanceKit.swift */,
 				F3C376972430184C00AE3677 /* UIWindow+AppearanceKit.swift */,
 				F3C3769A2430184C00AE3677 /* CALayer+AppearanceKit.swift */,
-				F3C376922430184C00AE3677 /* CATextLayer+AppearanceKit.swift */,
 				F3C3769C2430184C00AE3677 /* CAShapeLayer+AppearanceKit.swift */,
-				F3C376A12430184C00AE3677 /* CAGradientLayer+AppearanceKit.swift */,
 				F3C3769F2430184C00AE3677 /* UIViewController+AppearanceKit.swift */,
 			);
 			path = Extension;
@@ -243,7 +237,7 @@
 				F3C376B02430184C00AE3677 /* CGColor+DynamicAppearanceType.swift */,
 				F3C376AB2430184C00AE3677 /* UIImage+DynamicAppearanceType.swift */,
 				F3C376AC2430184C00AE3677 /* NSAttributedString+AppearanceKit.swift */,
-				F3C376AF2430184C00AE3677 /* NSTextAttachment+DynamicAppearanceType.swift */,
+				F31732C02436C02100052424 /* NSTextAttachment+DynamicAppearanceType.swift */,
 			);
 			path = DynamicAppearanceType;
 			sourceTree = "<group>";
@@ -463,17 +457,16 @@
 				F3C376B72430184C00AE3677 /* UITextField+AppearanceKit.swift in Sources */,
 				F3C376D22430184C00AE3677 /* UIColor+DynamicAppearanceType.swift in Sources */,
 				F3C376CB2430184C00AE3677 /* BindableProperty.swift in Sources */,
-				F3C376D42430184C00AE3677 /* NSTextAttachment+DynamicAppearanceType.swift in Sources */,
 				F3C376C22430184C00AE3677 /* UIScrollView+AppearanceKit.swift in Sources */,
 				F3C376BA2430184C00AE3677 /* UIView+AppearanceKit.swift in Sources */,
 				F3C376CE2430184C00AE3677 /* AppearanceManager.swift in Sources */,
 				F3C376C02430184C00AE3677 /* UILabel+AppearanceKit.swift in Sources */,
 				F3C376B82430184C00AE3677 /* UISlider+AppearanceKit.swift in Sources */,
+				F31732C12436C02100052424 /* NSTextAttachment+DynamicAppearanceType.swift in Sources */,
 				F3C376CD2430184C00AE3677 /* AppearanceEnvironment.swift in Sources */,
 				F3C376BB2430184C00AE3677 /* UIImageView+AppearanceKit.swift in Sources */,
 				F3C376D52430184C00AE3677 /* CGColor+DynamicAppearanceType.swift in Sources */,
 				F3C376C72430184C00AE3677 /* UINavigationBar+AppearanceKit.swift in Sources */,
-				F3C376C82430184C00AE3677 /* CAGradientLayer+AppearanceKit.swift in Sources */,
 				F3C376C92430184C00AE3677 /* UIToolBar+AppearanceKit.swift in Sources */,
 				F3C376D62430184C00AE3677 /* Swizzle.swift in Sources */,
 				F3C376B62430184C00AE3677 /* UITabBar+AppearanceKit.swift in Sources */,
@@ -482,7 +475,6 @@
 				F3C376CC2430184C00AE3677 /* AppearanceTrait.swift in Sources */,
 				F3C376BF2430184C00AE3677 /* UITextView+AppearanceKit.swift in Sources */,
 				F3C376BD2430184C00AE3677 /* UITableView+AppearanceKit.swift in Sources */,
-				F3C376B92430184C00AE3677 /* CATextLayer+AppearanceKit.swift in Sources */,
 				F3C376D12430184C00AE3677 /* NSAttributedString+AppearanceKit.swift in Sources */,
 				F3C376CA2430184C00AE3677 /* UIBindable.swift in Sources */,
 				F3C376C12430184C00AE3677 /* CALayer+AppearanceKit.swift in Sources */,
@@ -760,6 +752,7 @@
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE DEBUG";
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USE_HEADERMAP = NO;
 			};

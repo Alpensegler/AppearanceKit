@@ -8,15 +8,29 @@
 import UIKit
 
 extension CGColor: DynamicAppearanceType {
-    public func customResolved<Base>(for appearance: Appearance<Base>) -> CGColor? {
-        guard let cgColor = dynamicColorProvider?.customResolved(for: appearance)?.cgColor else { return nil }
-        cgColor.dynamicColorProvider = dynamicColorProvider
-        return cgColor
+    var dynamicProvider: StoredDynamicProvider<CGColor>? {
+        get { Associator(self).getAssociated("dynamicProvider") }
+        set { Associator(self).setAssociated("dynamicProvider", newValue) }
     }
     
-    var dynamicColorProvider: UIColor? {
-        get { Associator(self).getAssociated("dynamicColorProvider") }
-        set { Associator(self).setAssociated("dynamicColorProvider", newValue) }
+    static var defaultClear: CGColor { CGColor(colorSpace: CGColorSpace(name: CGColorSpace.linearGray)!, components: [0, 0])! }
+}
+
+public extension CGColor {
+    static func bindEnvironment<Value: Hashable, Attribute>(
+        _ keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
+        by provider: @escaping (Value) -> CGColor
+    ) -> CGColor {
+        let color = CGColor.defaultClear
+        color.dynamicProvider = .init(keyPath, by: provider)
+        return color
     }
     
+    func resolved<Base: AppearanceEnvironment>(for appearance: Appearance<Base>) -> CGColor? {
+        dynamicProvider?.resolved(for: appearance)?.resolved
+    }
+    
+    func debugPrint() {
+        print(dynamicProvider)
+    }
 }

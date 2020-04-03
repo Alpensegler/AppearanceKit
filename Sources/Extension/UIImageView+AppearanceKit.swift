@@ -22,14 +22,14 @@ extension UIImageView {
     }()
     
     @objc func __init(image: UIImage?) -> UIImageView {
-        if image?.dynamicAppearanceProvider != nil {
+        if image?.dynamicProvider != nil {
             _dynamicImage = image
         }
         return __init(image: image)
     }
     
     @objc func __setImage(_ image: UIImage?) {
-        _dynamicImage = image?.dynamicAppearanceProvider != nil ? image : nil
+        _dynamicImage = image?.dynamicProvider != nil ? image : nil
         __setImage(image)
     }
     

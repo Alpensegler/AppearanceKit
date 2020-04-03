@@ -26,8 +26,9 @@ public struct Appearance<Base: AppearanceEnvironment> {
 
 protocol AppearanceType {
     subscript<Value: Hashable, Attribute>(
-        keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>
-    ) -> Value { get }
+        keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
+        notEqualTo value: AnyHashable
+    ) -> Value? { get }
 }
 
 extension Appearance: CustomStringConvertible, CustomDebugStringConvertible, AppearanceType {
@@ -102,6 +103,7 @@ public extension Appearance {
 }
 
 extension Appearance {
+    
     init(_ base: Base) {
         self.base = base
         self._traits = .init(assciatedIn: base, key: "AppearanceKit.traits")
@@ -111,16 +113,20 @@ extension Appearance {
     }
     
     subscript<Value: Hashable, Attribute>(
-        keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>
-    ) -> Value {
+        keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
+        notEqualTo value: AnyHashable
+    ) -> Value? {
+        let result: Value
         switch keyPath {
         case let keyPath as KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Void>>:
-            return self[dynamicMember: keyPath]
+            if let value = traits.changingTrait[keyPath.hashValue]?.environment.value as? Value { return value }
+            result = self[dynamicMember: keyPath]
         case let keyPath as KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, (UITraitCollection) -> Value>>:
-            return self[dynamicMember: keyPath]
-        default:
-            fatalError("not supported environment type \(keyPath)")
+            if let value = uiTraits.changingTrait[keyPath.hashValue]?.environment.value as? Value { return value }
+            result = self[dynamicMember: keyPath]
+        default: return nil
         }
+        return AnyHashable(result) == value ? nil : result
     }
     
     func setConfigureOnce() {

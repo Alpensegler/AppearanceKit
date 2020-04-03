@@ -8,103 +8,36 @@
 import UIKit
 
 extension UIColor: DynamicAppearanceType {
-    public func customResolved<Base>(for appearance: Appearance<Base>) -> UIColor? {
-        guard #available(iOS 13.0, *), let trait = appearance.traitCollection else { return nil }
-        let value = dynamicColorProvider ?? self
-        guard UIColor.dynamicClassesToSwizzleString.contains(NSStringFromClass(type(of: value))) else { return nil }
-        _ = appearance.isUserInterfaceDark
-        let color = value.resolvedColor(with: trait)
-        guard color != self, let result = value.copy() as? UIColor else { return nil }
-        result.dynamicColorProvider = dynamicColorProvider ?? self
-        return result
-    }
-}
-
-extension UIColor {
-    static let dynamicClassesToSwizzleString: Set = [
+    static let dynamicClasses: Set = [
         "UIDynamicSystemColor",
         "UIDynamicModifiedColor",
         "UIDynamicProviderColor",
     ]
     
-    static let dynamicClassesToSwizzle = dynamicClassesToSwizzleString.compactMap(NSClassFromString)
-    
-    static let classesToSwizzle = [
-        "UIColor",
-        "UIDeviceRGBColor",
-        "UIDisplayP3Color",
-        "UIPlaceholderColor",
-        "UICIColor",
-        "UIDeviceWhiteColor",
-        "UICGColor",
-        "UICachedDeviceRGBColor",
-        "UICachedDeviceWhiteColor",
-        "UICachedDevicePatternColor",
-    ].compactMap(NSClassFromString)
-    
-    static let swizzleForAppearanceOne: Void = {
+    var dynamicProvider: StoredDynamicProvider<UIColor>? {
+        get { getAssociated(\.dynamicProvider) }
+        set { setAssociated(\.dynamicProvider, newValue) }
+    }
+}
 
-        for anyClass in dynamicClassesToSwizzle {
-            swizzle(classType: anyClass.self, selector: #selector(getter: cgColor), functionType: (@convention(c) (UIColor) -> CGColor).self) { (imp) -> @convention(block) (UIColor) -> CGColor in
-                return {
-                    let color = imp()($0)
-                    color.dynamicColorProvider = $0
-                    return color
-                }
-            }
-        }
-        
-
-        for anyClass in classesToSwizzle {
-            swizzle(classType: anyClass.self, selector: #selector(withAlphaComponent(_:)), functionType: (@convention(c) (AnyObject, Selector, CGFloat) -> UIColor).self) { (imp) -> @convention(block) (AnyObject, Selector, CGFloat) -> UIColor in
-                return { (obj, sel, alpha) in
-                    let rawImplement = imp()
-                    let result = rawImplement(obj, sel, alpha)
-                    guard let color = obj as? UIColor else { return result }
-                    result.dynamicColorProvider = color.dynamicColorProvider.map { rawImplement($0, sel, alpha) }
-                    guard let provider = color.dynamicAppearanceProvider?.provider else { return result }
-                    result.dynamicAppearanceProvider?.provider = { rawImplement(provider($0), sel, alpha) }
-                    return result
-                }
-            }
-        }
-        
-        
-        for anyClass in classesToSwizzle + dynamicClassesToSwizzle {
-            swizzle(classType: anyClass.self, selector: #selector(copy), functionType: (@convention(c) (UIColor) -> UIColor).self) { (imp) -> @convention(block) (UIColor) -> UIColor in
-                return {
-                    let color = imp()($0)
-                    color.dynamicAppearanceProvider = $0.dynamicAppearanceProvider
-                    return color
-                }
-            }
-            
-            
-            swizzle(classType: anyClass.self, selector: #selector(copy(with:)), functionType: (@convention(c) (UIColor, Selector, NSZone?) -> UIColor).self) { (imp) -> @convention(block) (UIColor, Selector, NSZone?) -> UIColor in
-                return {
-                    let color = imp()($0, $1, $2)
-                    color.dynamicAppearanceProvider = $0.dynamicAppearanceProvider
-                    return color
-                }
-            }
-            
-            swizzle(classType: anyClass.self, selector: #selector(withAlphaComponent(_:)), functionType: (@convention(c) (AnyObject, Selector, CGFloat) -> UIColor).self) { (imp) -> @convention(block) (AnyObject, Selector, CGFloat) -> UIColor in
-                return { (obj, sel, alpha) in
-                    let rawImplement = imp()
-                    let result = rawImplement(obj, sel, alpha)
-                    guard let color = obj as? UIColor else { return result }
-                    result.dynamicColorProvider = color.dynamicColorProvider.map { rawImplement($0, sel, alpha) }
-                    guard let provider = color.dynamicAppearanceProvider?.provider else { return result }
-                    result.dynamicAppearanceProvider?.provider = { rawImplement(provider($0), sel, alpha) }
-                    return result
-                }
-            }
-        }
-    }()
-    
-    var dynamicColorProvider: UIColor? {
-        get { Associator(self).getAssociated("dynamicColorProvider") }
-        set { Associator(self).setAssociated("dynamicColorProvider", newValue) }
+public extension UIColor {
+    static func bindEnvironment<Value: Hashable, Attribute>(
+        _ keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
+        by provider: @escaping (Value) -> UIColor
+    ) -> UIColor {
+        let color = UIColor(cgColor: .defaultClear)
+        color.dynamicProvider = .init(keyPath, by: provider)
+        return color
     }
     
+    func resolved<Base>(for appearance: Appearance<Base>) -> UIColor? {
+        dynamicProvider?.resolved(for: appearance)?.resolved
+    }
+    
+    var dynamicCGColor: CGColor {
+        guard UIColor.dynamicClasses.contains(NSStringFromClass(type(of: self))), #available(iOS 13, *) else { return cgColor }
+        let light = resolvedColor(with: .init(userInterfaceStyle: .light))
+        let dark = resolvedColor(with: .init(userInterfaceStyle: .dark))
+        return .init(lightAppearance: light.cgColor, darkAppearance: dark.cgColor)
+    }
 }

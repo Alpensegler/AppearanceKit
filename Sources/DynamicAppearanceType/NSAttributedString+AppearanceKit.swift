@@ -8,29 +8,25 @@
 import UIKit
 
 extension NSAttributedString: DynamicAppearanceType {
-    public func customResolved<Base>(for appearance: Appearance<Base>) -> NSAttributedString? {
-        guard let result = mutableCopy() as? NSMutableAttributedString else { return nil }
-        var hasChange = false
-        func addReslovedIfNeeded<T: DynamicAppearanceType>(
-            _ dynamicType: T.Type,
-            key: NSAttributedString.Key,
-            attributes: [NSAttributedString.Key: Any],
-            range: NSRange
-        ) {
-            guard let resolved = (attributes[key] as? T)?.resolved(for: appearance) else { return }
-            hasChange = true
-            result.addAttribute(key, value: resolved, range: range)
-        }
-        result.beginEditing()
-        enumerateAttributes(in: NSRange(location: 0, length: length), options: .longestEffectiveRangeNotRequired) { (dict, range, _) in
-            addReslovedIfNeeded(UIColor.self, key: .backgroundColor, attributes: dict, range: range)
-            addReslovedIfNeeded(UIColor.self, key: .foregroundColor, attributes: dict, range: range)
-            addReslovedIfNeeded(UIColor.self, key: .strokeColor, attributes: dict, range: range)
-            addReslovedIfNeeded(UIColor.self, key: .underlineColor, attributes: dict, range: range)
-            addReslovedIfNeeded(NSTextAttachment.self, key: .attachment, attributes: dict, range: range)
-        }
-        if !hasChange { return nil }
-        result.endEditing()
-        return result
+    var dynamicProvider: DynamicProvider<NSAttributedString>? {
+        get { getAssociated(\NSAttributedString.dynamicProvider) }
+        set { setAssociated(\NSAttributedString.dynamicProvider, newValue) }
+    }
+}
+
+public extension NSAttributedString {
+    static func bindEnvironment<Value: Hashable, Attribute>(
+        _ keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
+        by provider: @escaping (Value) -> NSAttributedString
+    ) -> NSAttributedString {
+        let (resolved, dynamicProvider) = DynamicProvider.fromBind(keyPath, by: provider)
+        resolved.dynamicProvider = dynamicProvider
+        return resolved
+    }
+    
+    func resolved<Base: AppearanceEnvironment>(for appearance: Appearance<Base>) -> NSAttributedString? {
+        guard let (resolved, dynamicProvider) = dynamicProvider?.resolved(for: appearance) else { return nil }
+        resolved.dynamicProvider = dynamicProvider
+        return resolved
     }
 }

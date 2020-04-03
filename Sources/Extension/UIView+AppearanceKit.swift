@@ -24,35 +24,25 @@ extension UIView {
         swizzle(selector: #selector(setter: backgroundColor), to: #selector(__setBackgroundColor(_:)))
         swizzle(selector: #selector(setter: tintColor), to: #selector(__setTintColor(_:)))
     }()
-    
+
     @objc override func configureAppearanceChange() {
         configureAppearance()
         _updateAppearance(traits: traits.changingTrait, exceptSelf: true)
     }
-    
+
     @objc var viewControllerForUpdate: UIViewController? { nil }
-    
+
     @objc func _traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         _traitCollectionDidChange(previousTraitCollection)
         if ap.didConfigureOnce { _updateAppearance() }
     }
-    
+
     @objc func __didMoveToSuperView() {
         __didMoveToSuperView()
         guard let superview = superview, superview.ap.didConfigureOnce else { return }
         _updateAppearance(traits: superview.traits.traits, configOnceIfNeeded: true)
     }
-    
-    @objc func __setBackgroundColor(_ color: UIColor?) {
-        __setBackgroundColor(color)
-        _dynamicBackgroundColor = color
-    }
-    
-    @objc func __setTintColor(_ color: UIColor!) {
-        __setTintColor(color)
-        _dynamicTintColor = color
-    }
-    
+
     func _updateAppearance(
         traits: [Int: Traits<Void>.Value]? = nil,
         exceptSelf: Bool = false,
@@ -64,12 +54,32 @@ extension UIView {
         subviews.forEach { $0._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded) }
         viewControllerForUpdate?._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded)
     }
-    
+
+    @objc func __setBackgroundColor(_ color: UIColor?) {
+        if let provider = color?.dynamicProvider {
+            __setBackgroundColor(provider.resolved)
+            _dynamicBackgroundColor = color
+        } else {
+            __setBackgroundColor(color)
+            _dynamicBackgroundColor = nil
+        }
+    }
+
+    @objc func __setTintColor(_ color: UIColor!) {
+        if let provider = color?.dynamicProvider {
+            __setTintColor(provider.resolved)
+            _dynamicTintColor = color
+        } else {
+            __setTintColor(color)
+            _dynamicTintColor = nil
+        }
+    }
+
     var _dynamicBackgroundColor: UIColor? {
         get { getAssociated(\UIView._dynamicBackgroundColor) }
         set { setAssociated(\UIView._dynamicBackgroundColor, newValue) }
     }
-    
+
     var _dynamicTintColor: UIColor? {
         get { getAssociated(\UIView._dynamicTintColor) }
         set { setAssociated(\UIView._dynamicTintColor, newValue) }

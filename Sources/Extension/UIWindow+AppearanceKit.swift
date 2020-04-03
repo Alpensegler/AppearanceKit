@@ -21,8 +21,8 @@ extension UIWindow {
         return window
     }
     
-    @objc func __setRootViewController(_ vc: UIViewController) {
+    @objc func __setRootViewController(_ vc: UIViewController?) {
         __setRootViewController(vc)
-        vc._updateAppearance(traits: traits.traits, configOnceIfNeeded: true)
+        vc?._updateAppearance(traits: traits.traits, configOnceIfNeeded: true)
     }
 }
