@@ -9,14 +9,24 @@ import UIKit
 
 extension UIWindow {
     static let swizzleWindowForAppearanceOne: Void = {
-        swizzle(selector: #selector(UIWindow.init(frame:)), to: #selector(__init))
+        if #available(iOS 13.0, *) {
+            swizzle(selector: #selector(UIWindow.init(windowScene:)), to: #selector(__init(windowScene:)))
+        }
+        swizzle(selector: #selector(UIWindow.init(frame:)), to: #selector(__init(frame:)))
         swizzle(selector: #selector(setter: UIWindow.rootViewController), to: #selector(__setRootViewController(_:)))
     }()
     
     override var viewControllerForUpdate: UIViewController? { rootViewController }
     
-    @objc func __init() -> UIWindow {
-        let window = __init()
+    @objc func __init(frame: CGRect) -> UIWindow {
+        let window = __init(frame: frame)
+        window.configureAppearance()
+        return window
+    }
+    
+    @available(iOS 13.0, *)
+    @objc func __init(windowScene: UIWindowScene) -> UIWindow {
+        let window = __init(windowScene: windowScene)
         window.configureAppearance()
         return window
     }

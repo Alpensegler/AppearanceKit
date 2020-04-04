@@ -81,3 +81,55 @@ extension StoredDynamicProvider {
     }
 }
 
+protocol ProvidableAppearanceType: DynamicAppearanceType where DynamicAppearanceBase: ProvidableAppearanceType {
+    var resloved: DynamicAppearanceBase? { get }
+}
+
+protocol DynamicProvidableAppearanceType: ProvidableAppearanceType where DynamicAppearanceBase: DynamicProvidableAppearanceType {
+    var dynamicProvider: DynamicProvider<DynamicAppearanceBase>? { get nonmutating set }
+}
+
+protocol StoredDynamicProvidableAppearanceType: ProvidableAppearanceType where DynamicAppearanceBase: StoredDynamicProvidableAppearanceType {
+    var dynamicProvider: StoredDynamicProvider<DynamicAppearanceBase>? { get nonmutating set }
+    
+    static var defaultBase: DynamicAppearanceBase { get }
+}
+
+extension DynamicProvidableAppearanceType {
+    static func _bindEnvironment<Value: Hashable, Attribute>(
+        _ keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
+        by provider: @escaping (Value) -> DynamicAppearanceBase
+    ) -> DynamicAppearanceBase {
+        let (resolved, dynamicProvider) = DynamicProvider.fromBind(keyPath, by: provider)
+        resolved.dynamicProvider = dynamicProvider
+        return resolved
+    }
+    
+    func _resolved<Base: AppearanceEnvironment>(for appearance: Appearance<Base>) -> DynamicAppearanceBase? {
+        guard let (image, dynamicProvider) = dynamicProvider?.resolved(for: appearance) else { return nil }
+        image.dynamicProvider = dynamicProvider
+        return image
+    }
+}
+
+extension DynamicProvidableAppearanceType where Self == DynamicAppearanceBase {
+    var resloved: DynamicAppearanceBase? { dynamicProvider == nil ? nil : self }
+}
+
+extension StoredDynamicProvidableAppearanceType {
+    static func _bindEnvironment<Value: Hashable, Attribute>(
+        _ keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
+        by provider: @escaping (Value) -> DynamicAppearanceBase
+    ) -> DynamicAppearanceBase {
+        let base = Self.defaultBase
+        base.dynamicProvider = .init(keyPath, by: provider)
+        return base
+    }
+    
+    func _resolved<Base: AppearanceEnvironment>(for appearance: Appearance<Base>) -> DynamicAppearanceBase? {
+        dynamicProvider?.resolved(for: appearance)?.resolved
+    }
+    
+    var resloved: DynamicAppearanceBase? { dynamicProvider?.resolved }
+}
+

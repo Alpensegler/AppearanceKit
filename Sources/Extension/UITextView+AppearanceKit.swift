@@ -12,7 +12,21 @@ extension UITextView {
         super.configureAppearance()
         let appearance = ap
         indicatorStyle = appearance.isUserInterfaceDark ? .black : .default
-        update(to: appearance, &attributedText)
+        update(to: appearance, __dynamicAttributedText, __attributedText(_:))
     }
 }
 
+extension UITextView {
+    static let swizzleTextViewForAppearanceOne: Void = {
+        swizzle(selector: #selector(setter: attributedText), to: #selector(__attributedText(_:)))
+    }()
+    
+    @objc func __attributedText(_ attr: NSAttributedString!) {
+        setDynamicValue(attr, store: &__dynamicAttributedText, setter: __attributedText(_:))
+    }
+
+    var __dynamicAttributedText: NSAttributedString? {
+        get { getAssociated(\.__dynamicAttributedText) }
+        set { setAssociated(\.__dynamicAttributedText, newValue) }
+    }
+}

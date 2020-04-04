@@ -56,32 +56,20 @@ extension UIView {
     }
 
     @objc func __setBackgroundColor(_ color: UIColor?) {
-        if let provider = color?.dynamicProvider {
-            __setBackgroundColor(provider.resolved)
-            _dynamicBackgroundColor = color
-        } else {
-            __setBackgroundColor(color)
-            _dynamicBackgroundColor = nil
-        }
+        setDynamicValue(color, store: &_dynamicBackgroundColor, setter: __setBackgroundColor(_:))
     }
 
     @objc func __setTintColor(_ color: UIColor!) {
-        if let provider = color?.dynamicProvider {
-            __setTintColor(provider.resolved)
-            _dynamicTintColor = color
-        } else {
-            __setTintColor(color)
-            _dynamicTintColor = nil
-        }
+        setDynamicValue(color, store: &_dynamicTintColor, setter: __setTintColor(_:))
     }
 
     var _dynamicBackgroundColor: UIColor? {
-        get { getAssociated(\UIView._dynamicBackgroundColor) }
-        set { setAssociated(\UIView._dynamicBackgroundColor, newValue) }
+        get { getAssociated(\._dynamicBackgroundColor) }
+        set { setAssociated(\._dynamicBackgroundColor, newValue) }
     }
 
     var _dynamicTintColor: UIColor? {
-        get { getAssociated(\UIView._dynamicTintColor) }
-        set { setAssociated(\UIView._dynamicTintColor, newValue) }
+        get { getAssociated(\._dynamicTintColor) }
+        set { setAssociated(\._dynamicTintColor, newValue) }
     }
 }

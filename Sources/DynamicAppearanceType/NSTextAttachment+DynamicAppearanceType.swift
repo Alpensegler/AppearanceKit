@@ -7,26 +7,52 @@
 
 import UIKit
 
-extension NSTextAttachment: DynamicAppearanceType {
-    var dynamicProvider: DynamicProvider<NSTextAttachment>? {
-        get { getAssociated(\NSTextAttachment.dynamicProvider) }
-        set { setAssociated(\NSTextAttachment.dynamicProvider, newValue) }
-    }
-}
-
 public extension NSTextAttachment {
     static func bindEnvironment<Value: Hashable, Attribute>(
         _ keyPath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Attribute>>,
         by provider: @escaping (Value) -> NSTextAttachment
     ) -> NSTextAttachment {
-        let (resolved, dynamicProvider) = DynamicProvider.fromBind(keyPath, by: provider)
-        resolved.dynamicProvider = dynamicProvider
-        return resolved
+        _bindEnvironment(keyPath, by: provider)
     }
     
     func resolved<Base: AppearanceEnvironment>(for appearance: Appearance<Base>) -> NSTextAttachment? {
-        guard let (resolved, dynamicProvider) = dynamicProvider?.resolved(for: appearance) else { return nil }
-        resolved.dynamicProvider = dynamicProvider
-        return resolved
+        if let resolved = _resolved(for: appearance) { return resolved }
+        if let image = image?.resolved(for: appearance) { return attachment(with: image) }
+        
+        guard #available(iOS 13, *), let assets = image?.imageAsset, let isDark = appearance[\.isUserInterfaceDark, notEqualTo: lastUserInterfaceStyle] else { return nil }
+        lastUserInterfaceStyle = isDark
+        let image = assets.image(with: isDark ? UITraitCollection(userInterfaceStyle: .dark) : UITraitCollection(userInterfaceStyle: .light))
+        return attachment(with: image)
+    }
+    
+    var resloved: NSTextAttachment? { isDynamic ? self : nil }
+    
+    var isDynamic: Bool {
+        if dynamicProvider != nil || image?.dynamicProvider != nil { return true }
+        if #available(iOS 13, *), image?.imageAsset != nil { return true }
+        return false
+    }
+}
+
+extension NSTextAttachment: DynamicProvidableAppearanceType {
+    var dynamicProvider: DynamicProvider<NSTextAttachment>? {
+        get { getAssociated(\.dynamicProvider) }
+        set { setAssociated(\.dynamicProvider, newValue) }
+    }
+    
+    var lastUserInterfaceStyle: AnyHashable {
+        get { getAssociated(\.lastUserInterfaceStyle, initialValue: AnyHashable(0)) }
+        set { setAssociated(\.lastUserInterfaceStyle, newValue) }
+    }
+    
+    func attachment(with image: UIImage) -> NSTextAttachment {
+        let result = NSTextAttachment()
+        result.dynamicProvider = dynamicProvider
+        result.contents = contents
+        result.fileType = fileType
+        result.fileWrapper = fileWrapper
+        result.bounds = bounds
+        result.image = image
+        return result
     }
 }
