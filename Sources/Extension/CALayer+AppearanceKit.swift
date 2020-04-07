@@ -31,10 +31,10 @@ extension CALayer {
         _updateAppearance(traits: traits.changingTrait, exceptSelf: true)
     }
     
-    @objc func __addSublayer(_ layer: CALayer) {
+    @objc func __addSublayer(_ layer: CALayer!) {
         __addSublayer(layer)
         guard let traitCollection = ap.traitCollection, ap.didConfigureOnce else { return }
-        layer._updateAppearance(traits: traits.traits, traitCollection, configOnceIfNeeded: true)
+        layer?._updateAppearance(traits: traits.traits, traitCollection, configOnceIfNeeded: true)
     }
     
     func _updateAppearance(
