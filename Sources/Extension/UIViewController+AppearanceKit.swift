@@ -35,30 +35,32 @@ extension UIViewController {
     @objc func __didMove(toParent: UIViewController?) {
         __didMove(toParent: toParent)
         guard let parent = toParent, parent.ap.didConfigureOnce else { return }
-        guard isViewLoaded else {
-            _didMoveToParentWithoutConfig = true
-            return
-        }
         _updateAppearance(traits: parent.traits.traits, configOnceIfNeeded: true)
     }
     
     @objc func __viewDidLoad() {
         __viewDidLoad()
-        guard _didMoveToParentWithoutConfig, let parent = parent, parent.ap.didConfigureOnce else { return }
-        _updateAppearance(traits: parent.traits.traits, configOnceIfNeeded: true)
-        _didMoveToParentWithoutConfig = false
+        guard let configOnceIfNeeded = _shouldConfigAfterViewDidLoad, let parent = parent, parent.ap.didConfigureOnce else { return }
+        _updateAppearance(traits: parent.traits.traits, configOnceIfNeeded: configOnceIfNeeded)
+        _shouldConfigAfterViewDidLoad = nil
     }
     
     func _updateAppearance(traits: [Int: Traits<Void>.Value]? = nil, exceptSelf: Bool = false, configOnceIfNeeded: Bool = false, configView: Bool = false) {
-        if !exceptSelf { ap.update(traits: traits, traitCollection: traitCollection, configOnceIfNeeded: configOnceIfNeeded) }
+        guard isViewLoaded else {
+            _shouldConfigAfterViewDidLoad = configView
+            return
+        }
+        if !exceptSelf {
+            ap.update(traits: traits, traitCollection: traitCollection, configOnceIfNeeded: configOnceIfNeeded)
+        }
         guard let traits = traits else { return }
         presentedViewController?._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded, configView: configView)
         children.forEach { $0._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded, configView: configView) }
-        if isViewLoaded, configView { view._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded) }
+        if configView { view._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded) }
     }
 
-    var _didMoveToParentWithoutConfig: Bool {
-        get { getAssociated(\._didMoveToParentWithoutConfig) }
-        set { setAssociated(\._didMoveToParentWithoutConfig, newValue) }
+    var _shouldConfigAfterViewDidLoad: Bool? {
+        get { getAssociated(\._shouldConfigAfterViewDidLoad) }
+        set { setAssociated(\._shouldConfigAfterViewDidLoad, newValue) }
     }
 }
