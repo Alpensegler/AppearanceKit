@@ -35,32 +35,34 @@ extension UIViewController {
     @objc func __didMove(toParent: UIViewController?) {
         __didMove(toParent: toParent)
         guard let parent = toParent, parent.ap.didConfigureOnce else { return }
-        _updateAppearance(traits: parent.traits.traits, configOnceIfNeeded: true)
+        _updateAppearanceIfCan(traits: parent.traits.traits)
     }
     
     @objc func __viewDidLoad() {
         __viewDidLoad()
-        guard let configOnceIfNeeded = _shouldConfigAfterViewDidLoad, let parent = parent, parent.ap.didConfigureOnce else { return }
-        _updateAppearance(traits: parent.traits.traits, configOnceIfNeeded: configOnceIfNeeded)
-        _shouldConfigAfterViewDidLoad = nil
+        guard let traits = _stagingTraits else { return }
+        _updateAppearance(traits: traits, configOnceIfNeeded: true)
+        _stagingTraits = nil
+    }
+    
+    func _updateAppearanceIfCan(traits: [Int: Traits<Void>.Value]) {
+        if isViewLoaded {
+            _updateAppearance(traits: traits, configOnceIfNeeded: true)
+        } else {
+            _stagingTraits = traits
+        }
     }
     
     func _updateAppearance(traits: [Int: Traits<Void>.Value]? = nil, exceptSelf: Bool = false, configOnceIfNeeded: Bool = false, configView: Bool = false) {
-        guard isViewLoaded else {
-            _shouldConfigAfterViewDidLoad = configView
-            return
-        }
-        if !exceptSelf {
-            ap.update(traits: traits, traitCollection: traitCollection, configOnceIfNeeded: configOnceIfNeeded)
-        }
+        if !exceptSelf { ap.update(traits: traits, traitCollection: traitCollection, configOnceIfNeeded: configOnceIfNeeded) }
         guard let traits = traits else { return }
         presentedViewController?._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded, configView: configView)
         children.forEach { $0._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded, configView: configView) }
         if configView { view._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded) }
     }
 
-    var _shouldConfigAfterViewDidLoad: Bool? {
-        get { getAssociated(\._shouldConfigAfterViewDidLoad) }
-        set { setAssociated(\._shouldConfigAfterViewDidLoad, newValue) }
+    var _stagingTraits: [Int: Traits<Void>.Value]? {
+        get { getAssociated(\._stagingTraits) }
+        set { setAssociated(\._stagingTraits, newValue) }
     }
 }
