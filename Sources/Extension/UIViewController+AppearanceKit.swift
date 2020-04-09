@@ -23,8 +23,15 @@ extension UIViewController {
     }()
     
     @objc override func configureAppearanceChange() {
-        configureAppearance()
-        _updateAppearance(traits: traits.changingTrait, exceptSelf: true, configView: true)
+        let config: (UIViewController) -> Void = {
+            $0.configureAppearance()
+            $0._updateAppearance(traits: $0.traits.changingTrait, exceptSelf: true, configView: true)
+        }
+        if isViewLoaded {
+            config(self)
+        } else {
+            _appendToStagingConfig(config: config)
+        }
     }
     
     @objc func __traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -35,34 +42,37 @@ extension UIViewController {
     @objc func __didMove(toParent: UIViewController?) {
         __didMove(toParent: toParent)
         guard let parent = toParent, parent.ap.didConfigureOnce else { return }
-        _updateAppearanceIfCan(traits: parent.traits.traits)
+        _updateAppearance(traits: parent.traits.traits, configOnceIfNeeded: true)
     }
     
     @objc func __viewDidLoad() {
         __viewDidLoad()
-        guard let traits = _stagingTraits else { return }
-        _updateAppearance(traits: traits, configOnceIfNeeded: true)
-        _stagingTraits = nil
-    }
-    
-    func _updateAppearanceIfCan(traits: [Int: Traits<Void>.Value]) {
-        if isViewLoaded {
-            _updateAppearance(traits: traits, configOnceIfNeeded: true)
-        } else {
-            _stagingTraits = traits
-        }
+        guard let configs = _stagingConfigs else { return }
+        configs.forEach { $0(self) }
+        _stagingConfigs = nil
     }
     
     func _updateAppearance(traits: [Int: Traits<Void>.Value]? = nil, exceptSelf: Bool = false, configOnceIfNeeded: Bool = false, configView: Bool = false) {
+        guard isViewLoaded else {
+            _appendToStagingConfig { $0._updateAppearance(traits: traits, exceptSelf: exceptSelf, configOnceIfNeeded: configOnceIfNeeded, configView: configView) }
+            return
+        }
         if !exceptSelf { ap.update(traits: traits, traitCollection: traitCollection, configOnceIfNeeded: configOnceIfNeeded) }
         guard let traits = traits else { return }
-        presentedViewController?._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded, configView: configView)
-        children.forEach { $0._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded, configView: configView) }
+        presentedViewController?._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded)
+        children.forEach { $0._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded) }
         if configView { view._updateAppearance(traits: traits, configOnceIfNeeded: configOnceIfNeeded) }
     }
+    
+    func _appendToStagingConfig(config: @escaping (UIViewController) -> Void) {
+        var configs = _stagingConfigs ?? []
+        configs.append(config)
+        _stagingConfigs = configs
+        return
+    }
 
-    var _stagingTraits: [Int: Traits<Void>.Value]? {
-        get { getAssociated(\._stagingTraits) }
-        set { setAssociated(\._stagingTraits, newValue) }
+    var _stagingConfigs: [(UIViewController) -> Void]? {
+        get { getAssociated(\._stagingConfigs) }
+        set { setAssociated(\._stagingConfigs, newValue) }
     }
 }

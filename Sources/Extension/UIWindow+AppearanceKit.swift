@@ -33,6 +33,6 @@ extension UIWindow {
     
     @objc func __setRootViewController(_ vc: UIViewController?) {
         __setRootViewController(vc)
-        vc?._updateAppearanceIfCan(traits: traits.traits)
+        vc?._updateAppearance(traits: traits.traits, configOnceIfNeeded: true)
     }
 }
