@@ -21,7 +21,7 @@ public enum AppearanceManager {
     }
     
     public static func updateEnvironment<Value>(
-        for application: UIApplication = .shared,
+        for application: UIApplication? = .ao_shared,
         _ keypath: KeyPath<AppearanceTrait, AppearanceTrait.Environment<Value, Void>>,
         with value: Value,
         animated: Bool
@@ -30,7 +30,7 @@ public enum AppearanceManager {
 
         if animated {
             var snapshotViews: [UIView] = []
-            application.windows.forEach { view in
+            application?.windows.forEach { view in
                 guard let snapshotView = view.snapshotView(afterScreenUpdates: false) else {
                     return
                 }
@@ -38,7 +38,7 @@ public enum AppearanceManager {
                 snapshotViews.append(snapshotView)
             }
             
-            application.windows.forEach { $0.ap[dynamicMember: keypath] = value }
+            application?.windows.forEach { $0.ap[dynamicMember: keypath] = value }
             
             UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.25, delay: 0, options: [], animations: {
                 snapshotViews.forEach { $0.alpha = 0 }
@@ -46,7 +46,7 @@ public enum AppearanceManager {
                 snapshotViews.forEach { $0.removeFromSuperview() }
             }
         } else {
-            application.windows.forEach { $0.ap[dynamicMember: keypath] = value }
+            application?.windows.forEach { $0.ap[dynamicMember: keypath] = value }
         }
     }
 }
