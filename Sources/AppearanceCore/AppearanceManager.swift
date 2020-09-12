@@ -13,6 +13,7 @@ public enum AppearanceManager {
         _ = UILabel.swizzleLabelForAppearanceOne
         _ = UITextView.swizzleTextViewForAppearanceOne
         _ = UITextField.swizzleTextFeildForAppearanceOne
+        _ = UIButton.swizzleButtonForAppearanceOne
         _ = UIWindow.swizzleWindowForAppearanceOne
         _ = UIImageView.swizzleImageForAppearanceOne
         _ = CALayer.swizzleForAppearanceOne

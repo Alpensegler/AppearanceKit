@@ -14,6 +14,14 @@ enum Theme: CaseIterable {
     case blue
     case green
     
+    var color: UIColor {
+        switch self {
+        case .blue: return .systemRed
+        case .red: return .systemBlue
+        case .green: return .systemGreen
+        }
+    }
+    
     static let `default` = Theme.allCases.randomElement()!
 }
 
@@ -25,13 +33,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .bindEnvironment(\.theme) {
-            switch $0 {
-            case .blue: return .systemRed
-            case .red: return .systemBlue
-            case .green: return .systemGreen
-            }
-        }
+        view.backgroundColor = .bindEnvironment(\.theme) { $0.color }
 
         let layer = CALayer()
         layer.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
@@ -46,43 +48,24 @@ class ViewController: UIViewController {
 
         view.layer.addSublayer(layer)
         
-        let image = UIImage.bindEnvironment(\.theme) {
-            switch $0 {
-            case .blue:
-                return .init(
-                    lightAppearance: UIColor.systemRed.lightColor.cellImage(),
-                    darkAppearance: UIColor.systemRed.darkColor.cellImage()
-                )
-            case .red:
-                return .init(
-                    lightAppearance: UIColor.systemBlue.lightColor.cellImage(),
-                    darkAppearance: UIColor.systemBlue.darkColor.cellImage()
-                )
-            case .green:
-                return .init(
-                    lightAppearance: UIColor.systemRed.lightColor.cellImage(),
-                    darkAppearance: UIColor.systemGreen.darkColor.cellImage()
-                )
-            }
-        }
-        
-        let label = UILabel()
-        let mutableAttributeString = NSMutableAttributedString(string: "text ")
+        let mutableAttributeString = NSMutableAttributedString(string: "change theme ")
         let attachment = NSTextAttachment()
-        attachment.image = image
-        attachment.bounds.size = image.size
+        attachment.image = .bindEnvironment(\.theme) {
+            .init(
+                lightAppearance: $0.color.lightColor.cellImage(),
+                darkAppearance: $0.color.darkColor.cellImage()
+            )
+        }
         mutableAttributeString.append(NSAttributedString(attachment: attachment))
-        label.attributedText = mutableAttributeString
-        label.font = .systemFont(ofSize: 20)
-        label.sizeToFit()
-        label.center = layer.position
-        view.addSubview(label)
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .refresh,
-            target: self,
-            action: #selector(refresh)
-        )
+        
+        let button = UIButton()
+        button.setTitleColor(.bindEnvironment(\.theme) { $0.color }, for: .normal)
+        button.setAttributedTitle(mutableAttributeString, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 20)
+        button.sizeToFit()
+        button.center = layer.position
+        button.addTarget(self, action: #selector(refresh), for: .touchUpInside)
+        view.addSubview(button)
     }
     
     override func configureAppearance() {
