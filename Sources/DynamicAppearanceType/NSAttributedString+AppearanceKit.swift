@@ -24,9 +24,13 @@ public extension NSAttributedString {
         result.containsDynamicAttachment = containsDynamicAttachment
         result.beginEditing()
         enumerateAttributes(in: NSRange(location: 0, length: length), options: .longestEffectiveRangeNotRequired) { (dict, range, _) in
-            guard let attachment = dict[.attachment] as? NSTextAttachment else { return }
-            guard let resolvedAttachment = attachment.resolved(for: appearance), attachment !== resolvedAttachment else { return }
-            result.addAttributes([.attachment: resolvedAttachment], range: range)
+            if let attachment = dict[.attachment] as? NSTextAttachment {
+                guard let resolvedAttachment = attachment.resolved(for: appearance), attachment !== resolvedAttachment else { return }
+                result.addAttributes([.attachment: resolvedAttachment], range: range)
+            } else if let color = dict[.foregroundColor] as? UIColor {
+                guard let resolvedColor = color.resolved(for: appearance) ?? color.resloved, resolvedColor !== color else { return }
+                result.addAttributes([.foregroundColor: resolvedColor], range: range)
+            }
         }
         result.endEditing()
         return result
@@ -50,9 +54,14 @@ extension NSAttributedString: DynamicProvidableAppearanceType {
     
     func configContainsDynamicAttachment() {
         enumerateAttributes(in: NSRange(location: 0, length: length), options: .longestEffectiveRangeNotRequired) { (dict, range, stop) in
-            guard let attachment = dict[.attachment] as? NSTextAttachment, attachment.isDynamic else { return }
-            containsDynamicAttachment = true
-            stop.pointee = true
+            if let attachment = dict[.attachment] as? NSTextAttachment, attachment.isDynamic {
+                containsDynamicAttachment = true
+                stop.pointee = true
+            }
+            if let color = dict[.foregroundColor] as? UIColor, color.dynamicProvider != nil {
+                containsDynamicAttachment = true
+                stop.pointee = true
+            }
         }
     }
 }

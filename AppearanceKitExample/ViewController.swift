@@ -48,7 +48,10 @@ class ViewController: UIViewController {
 
         view.layer.addSublayer(layer)
         
-        let mutableAttributeString = NSMutableAttributedString(string: "change theme ")
+        let mutableAttributeString = NSMutableAttributedString(
+            string: "change theme ",
+            attributes: [.foregroundColor: UIColor.bindEnvironment(\.theme) { $0.color }]
+        )
         let attachment = NSTextAttachment()
         attachment.image = .bindEnvironment(\.theme) {
             .init(
@@ -59,7 +62,6 @@ class ViewController: UIViewController {
         mutableAttributeString.append(NSAttributedString(attachment: attachment))
         
         let button = UIButton()
-        button.setTitleColor(.bindEnvironment(\.theme) { $0.color }, for: .normal)
         button.setAttributedTitle(mutableAttributeString, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20)
         button.sizeToFit()
