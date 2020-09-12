@@ -39,7 +39,7 @@ class ViewController: UIViewController {
         if #available(iOS 13.0, *) {
             let color = UIColor { $0.userInterfaceStyle == .dark ? .white : .black }.dynamicCGColor
 
-            layer.backgroundColor = UIColor.white.cgColor
+            layer.backgroundColor = UIColor.systemBackground.dynamicCGColor
             layer.borderColor = color
             layer.borderWidth = 1
         }
@@ -67,12 +67,13 @@ class ViewController: UIViewController {
         }
         
         let label = UILabel()
-        let mutableAttributeString = NSMutableAttributedString(string: "text")
+        let mutableAttributeString = NSMutableAttributedString(string: "text ")
         let attachment = NSTextAttachment()
         attachment.image = image
         attachment.bounds.size = image.size
         mutableAttributeString.append(NSAttributedString(attachment: attachment))
         label.attributedText = mutableAttributeString
+        label.font = .systemFont(ofSize: 20)
         label.sizeToFit()
         label.center = layer.position
         view.addSubview(label)
@@ -96,7 +97,7 @@ class ViewController: UIViewController {
 }
 
 extension UIColor {
-    func cellImage(forSize size: CGSize = CGSize(width: 10, height: 10)) -> UIImage {
+    func cellImage(forSize size: CGSize = CGSize(width: 15, height: 15)) -> UIImage {
         UIGraphicsImageRenderer(size: size).image { (context) in
             let bounds = context.format.bounds
             set()
