@@ -17,12 +17,6 @@ enum Theme: CaseIterable {
     static let `default` = Theme.allCases.randomElement()!
 }
 
-class CustomLayer: CALayer {
-    override func configureAppearance() {
-        super.configureAppearance()
-    }
-}
-
 extension AppearanceTrait {
     var theme: StoredEnvironment<Theme> { .init(defaultValue: .default) }
 }
@@ -39,7 +33,7 @@ class ViewController: UIViewController {
             }
         }
 
-        let layer = CustomLayer()
+        let layer = CALayer()
         layer.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
         layer.position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
         if #available(iOS 13.0, *) {
@@ -51,6 +45,37 @@ class ViewController: UIViewController {
         }
 
         view.layer.addSublayer(layer)
+        
+        let image = UIImage.bindEnvironment(\.theme) {
+            switch $0 {
+            case .blue:
+                return .init(
+                    lightAppearance: UIColor.systemRed.lightColor.cellImage(),
+                    darkAppearance: UIColor.systemRed.darkColor.cellImage()
+                )
+            case .red:
+                return .init(
+                    lightAppearance: UIColor.systemBlue.lightColor.cellImage(),
+                    darkAppearance: UIColor.systemBlue.darkColor.cellImage()
+                )
+            case .green:
+                return .init(
+                    lightAppearance: UIColor.systemRed.lightColor.cellImage(),
+                    darkAppearance: UIColor.systemGreen.darkColor.cellImage()
+                )
+            }
+        }
+        
+        let label = UILabel()
+        let mutableAttributeString = NSMutableAttributedString(string: "text")
+        let attachment = NSTextAttachment()
+        attachment.image = image
+        attachment.bounds.size = image.size
+        mutableAttributeString.append(NSAttributedString(attachment: attachment))
+        label.attributedText = mutableAttributeString
+        label.sizeToFit()
+        label.center = layer.position
+        view.addSubview(label)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .refresh,
@@ -64,6 +89,18 @@ class ViewController: UIViewController {
     }
     
     @objc private func refresh() {
-        ap.theme = Theme.allCases.lazy.filter { $0 != self.ap.theme }.randomElement()!
+        UIView.animate(withDuration: 0.3) {
+            self.ap.theme = Theme.allCases.lazy.filter { $0 != self.ap.theme }.randomElement()!
+        }
+    }
+}
+
+extension UIColor {
+    func cellImage(forSize size: CGSize = CGSize(width: 10, height: 10)) -> UIImage {
+        UIGraphicsImageRenderer(size: size).image { (context) in
+            let bounds = context.format.bounds
+            set()
+            context.fill(bounds)
+        }
     }
 }

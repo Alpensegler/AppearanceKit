@@ -13,6 +13,7 @@ extension UITextView {
         let appearance = ap
         indicatorStyle = appearance.isUserInterfaceDark ? .black : .default
         update(to: appearance, __dynamicAttributedText, __attributedText(_:))
+        setNeedsDisplay()
     }
 }
 
@@ -22,6 +23,7 @@ extension UITextView {
     }()
     
     @objc func __attributedText(_ attr: NSAttributedString!) {
+        attr?.configContainsDynamicAttachment()
         setDynamicValue(attr, store: &__dynamicAttributedText, setter: __attributedText(_:))
     }
 

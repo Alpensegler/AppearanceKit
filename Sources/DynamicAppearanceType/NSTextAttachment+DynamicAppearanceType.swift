@@ -17,12 +17,16 @@ public extension NSTextAttachment {
     
     func resolved<Base: AppearanceEnvironment>(for appearance: Appearance<Base>) -> NSTextAttachment? {
         if let resolved = _resolved(for: appearance) { return resolved }
-        if let image = image?.resolved(for: appearance) { return attachment(with: image) }
-        
+        let provider = image?.dynamicProvider
+        if let resolvedImage = image?.resolved(for: appearance) {
+            self.image = resolvedImage
+            return self
+        }
         guard #available(iOS 13, *), let assets = image?.imageAsset, let isDark = appearance[\.isUserInterfaceDark, notEqualTo: lastUserInterfaceStyle] else { return nil }
         lastUserInterfaceStyle = isDark
-        let image = assets.image(with: isDark ? UITraitCollection(userInterfaceStyle: .dark) : UITraitCollection(userInterfaceStyle: .light))
-        return attachment(with: image)
+        self.image = assets.image(with: isDark ? UITraitCollection(userInterfaceStyle: .dark) : UITraitCollection(userInterfaceStyle: .light))
+        self.image?.dynamicProvider = provider
+        return self
     }
     
     var resloved: NSTextAttachment? { isDynamic ? self : nil }
@@ -43,16 +47,5 @@ extension NSTextAttachment: DynamicProvidableAppearanceType {
     var lastUserInterfaceStyle: AnyHashable {
         get { getAssociated(\.lastUserInterfaceStyle, initialValue: AnyHashable(0)) }
         set { setAssociated(\.lastUserInterfaceStyle, newValue) }
-    }
-    
-    func attachment(with image: UIImage) -> NSTextAttachment {
-        let result = NSTextAttachment()
-        result.dynamicProvider = dynamicProvider
-        result.contents = contents
-        result.fileType = fileType
-        result.fileWrapper = fileWrapper
-        result.bounds = bounds
-        result.image = image
-        return result
     }
 }

@@ -14,6 +14,7 @@ extension UILabel {
         update(to: appearance, &textColor)
         update(to: appearance, &highlightedTextColor)
         update(to: appearance, _dynamicAttributedText, __setAttributedText)
+        setNeedsDisplay()
     }
 }
 
@@ -29,6 +30,7 @@ extension UILabel {
     }
     
     @objc func __setAttributedText(_ attr: NSAttributedString?) {
+        attr?.configContainsDynamicAttachment()
         setDynamicValue(attr, store: &_dynamicAttributedText, setter: __setAttributedText(_:))
     }
 
