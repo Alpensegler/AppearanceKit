@@ -23,21 +23,11 @@ extension CAShapeLayer {
     }()
     
     @objc func __fillColor(_ fillColor: CGColor?) {
-        guard let provider = fillColor?.dynamicProvider else {
-            __fillColor(fillColor)
-            return
-        }
-        __fillColor(provider.resolved)
-        _dynamicFillColor = fillColor
+        setDynamicValue(fillColor, store: &_dynamicFillColor, setter: __fillColor)
     }
     
     @objc func __strokeColor(_ strokeColor: CGColor?) {
-        guard let provider = strokeColor?.dynamicProvider else {
-            __strokeColor(strokeColor)
-            return
-        }
-        __strokeColor(provider.resolved)
-        _dynamicStrokeColor = strokeColor
+        setDynamicValue(strokeColor, store: &_dynamicStrokeColor, setter: __strokeColor)
     }
     
     

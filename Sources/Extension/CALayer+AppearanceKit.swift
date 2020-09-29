@@ -50,30 +50,15 @@ extension CALayer {
     }
     
     @objc func __backgroundColor(_ backgroundColor: CGColor?) {
-        guard let provider = backgroundColor?.dynamicProvider else {
-            __backgroundColor(backgroundColor)
-            return
-        }
-        __backgroundColor(provider.resolved)
-        _dynamicBackgroundColor = backgroundColor
+        setDynamicValue(backgroundColor, store: &_dynamicBackgroundColor, setter: __backgroundColor)
     }
     
     @objc func __borderColor(_ borderColor: CGColor?) {
-        guard let provider = borderColor?.dynamicProvider else {
-            __borderColor(borderColor)
-            return
-        }
-        __borderColor(provider.resolved)
-        _dynamicBorderColor = borderColor
+        setDynamicValue(borderColor, store: &_dynamicBorderColor, setter: __borderColor)
     }
     
     @objc func __shadowColor(_ shadowColor: CGColor?) {
-        guard let provider = shadowColor?.dynamicProvider else {
-            __shadowColor(shadowColor)
-            return
-        }
-        __shadowColor(provider.resolved)
-        _dynamicShadowColor = shadowColor
+        setDynamicValue(shadowColor, store: &_dynamicShadowColor, setter: __shadowColor)
     }
     
     var _dynamicBackgroundColor: CGColor? {
