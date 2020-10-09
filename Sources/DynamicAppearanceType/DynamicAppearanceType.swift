@@ -127,9 +127,15 @@ extension StoredDynamicProvidableAppearanceType {
     }
     
     func _resolved<Base: AppearanceEnvironment>(for appearance: Appearance<Base>) -> DynamicAppearanceBase? {
-        dynamicProvider?.resolved(for: appearance)?.resolved
+        guard var resolved = dynamicProvider?.resolved(for: appearance)?.resolved else { return nil }
+        while let newResolved = resolved.resolved(for: appearance)?.resloved ?? resolved.resloved { resolved = newResolved }
+        return resolved
     }
     
-    var resloved: DynamicAppearanceBase? { dynamicProvider?.resolved }
+    var resloved: DynamicAppearanceBase? {
+        guard var resolved = dynamicProvider?.resolved else { return nil }
+        while let newResolved = resolved.resloved { resolved = newResolved }
+        return resolved
+    }
 }
 

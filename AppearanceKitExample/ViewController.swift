@@ -35,13 +35,20 @@ class ViewController: UIViewController {
         
         view.backgroundColor = .bindEnvironment(\.theme) { $0.color }
 
-        let layer = CALayer()
+        let layer = CAShapeLayer()
         layer.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
         layer.position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
         if #available(iOS 13.0, *) {
             let color = UIColor { $0.userInterfaceStyle == .dark ? .white : .black }.dynamicCGColor
 
+            let path = UIBezierPath()
+            path.move(to: CGPoint(x: 0, y: layer.bounds.height / 2))
+            path.addLine(to: CGPoint(x: layer.bounds.width, y: layer.bounds.height / 2))
+            
+            layer.path = path.cgPath
+            layer.lineWidth = 3
             layer.backgroundColor = UIColor.systemBackground.dynamicCGColor
+            layer.strokeColor = .bindEnvironment(\.theme) { $0.color.dynamicCGColor }
             layer.borderColor = color
             layer.borderWidth = 1
         }
