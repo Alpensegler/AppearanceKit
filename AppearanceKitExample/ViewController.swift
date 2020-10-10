@@ -75,6 +75,14 @@ class ViewController: UIViewController {
         button.center = layer.position
         button.addTarget(self, action: #selector(refresh), for: .touchUpInside)
         view.addSubview(button)
+        
+        let label = UILabel()
+        label.textColor = .bindEnvironment(\.theme) { $0.color }
+        label.font = .systemFont(ofSize: 20)
+        label.text = "Color"
+        label.sizeToFit()
+        label.center = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 + 30)
+        view.addSubview(label)
     }
     
     override func configureAppearance() {
