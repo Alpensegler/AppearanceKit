@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		F31732C12436C02100052424 /* NSTextAttachment+DynamicAppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31732C02436C02100052424 /* NSTextAttachment+DynamicAppearanceType.swift */; };
+		F391958A25A8365A003D3E48 /* CATextLayer+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F391958925A8365A003D3E48 /* CATextLayer+AppearanceKit.swift */; };
 		F3C376B62430184C00AE3677 /* UITabBar+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3768F2430184C00AE3677 /* UITabBar+AppearanceKit.swift */; };
 		F3C376B72430184C00AE3677 /* UITextField+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376902430184C00AE3677 /* UITextField+AppearanceKit.swift */; };
 		F3C376B82430184C00AE3677 /* UISlider+AppearanceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C376912430184C00AE3677 /* UISlider+AppearanceKit.swift */; };
@@ -109,6 +110,7 @@
 		"AppearanceKit::AppearanceKit::Product" /* AppearanceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AppearanceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"AppearanceKit::AppearanceKitTests::Product" /* AppearanceKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = AppearanceKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F31732C02436C02100052424 /* NSTextAttachment+DynamicAppearanceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextAttachment+DynamicAppearanceType.swift"; sourceTree = "<group>"; };
+		F391958925A8365A003D3E48 /* CATextLayer+AppearanceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CATextLayer+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C3768F2430184C00AE3677 /* UITabBar+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBar+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C376902430184C00AE3677 /* UITextField+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+AppearanceKit.swift"; sourceTree = "<group>"; };
 		F3C376912430184C00AE3677 /* UISlider+AppearanceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISlider+AppearanceKit.swift"; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				F3C3769E2430184C00AE3677 /* UIPageControl+AppearanceKit.swift */,
 				F3C376972430184C00AE3677 /* UIWindow+AppearanceKit.swift */,
 				F3C3769A2430184C00AE3677 /* CALayer+AppearanceKit.swift */,
+				F391958925A8365A003D3E48 /* CATextLayer+AppearanceKit.swift */,
 				F3C3769C2430184C00AE3677 /* CAShapeLayer+AppearanceKit.swift */,
 				F3C3769F2430184C00AE3677 /* UIViewController+AppearanceKit.swift */,
 			);
@@ -480,6 +483,7 @@
 				F3C376C12430184C00AE3677 /* CALayer+AppearanceKit.swift in Sources */,
 				F3C376BE2430184C00AE3677 /* UIWindow+AppearanceKit.swift in Sources */,
 				F3C376D92430184C00AE3677 /* Associator.swift in Sources */,
+				F391958A25A8365A003D3E48 /* CATextLayer+AppearanceKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

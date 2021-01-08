@@ -18,6 +18,7 @@ public enum AppearanceManager {
         _ = UIImageView.swizzleImageForAppearanceOne
         _ = CALayer.swizzleForAppearanceOne
         _ = CAShapeLayer.swizzleShapeColorForAppearanceOne
+        _ = CATextLayer.swizzleTextColorForAppearanceOne
         _ = UIViewController.swizzleForAppearanceOne
     }
 }
