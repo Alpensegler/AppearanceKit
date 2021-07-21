@@ -7,7 +7,7 @@
 
 import ObjectiveC.runtime
 
-public protocol Associatable: class { }
+public protocol Associatable: AnyObject { }
 
 public struct Associator {
     public enum Policy {
