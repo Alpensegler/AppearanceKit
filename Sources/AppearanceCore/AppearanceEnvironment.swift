@@ -9,6 +9,7 @@ import UIKit
 
 public protocol AppearanceEnvironment: NSObject {
     func configureAppearance()
+    var onAppearanceChanged: (() -> Void)? { get set }
 }
 
 public extension AppearanceEnvironment {
@@ -41,6 +42,11 @@ extension AppearanceEnvironment {
         if appearance.didConfigureOnce {
             update(to: appearance, value, setter)
         }
+    }
+    
+    func configAppearanceAndTriggerOnchanged() {
+        configureAppearance()
+        onAppearanceChanged?()
     }
 }
 

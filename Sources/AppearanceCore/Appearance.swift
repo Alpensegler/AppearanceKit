@@ -134,7 +134,7 @@ extension Appearance {
     }
     
     func configureAppearance(currentOnly: Bool = false) {
-        currentOnly ? base.configureAppearance() : base.configureAppearanceChange()
+        currentOnly ? base.configAppearanceAndTriggerOnchanged() : base.configureAppearanceChange()
         traits.changingTrait.removeAll()
         uiTraits.changingTrait.removeAll()
     }

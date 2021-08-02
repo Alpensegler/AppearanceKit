@@ -16,8 +16,8 @@ enum Theme: CaseIterable {
     
     var color: UIColor {
         switch self {
-        case .blue: return .systemRed
-        case .red: return .systemBlue
+        case .blue: return .systemBlue
+        case .red: return .systemRed
         case .green: return .systemGreen
         }
     }
@@ -51,6 +51,10 @@ class ViewController: UIViewController {
             layer.strokeColor = .bindEnvironment(\.theme) { $0.color.dynamicCGColor }
             layer.borderColor = color
             layer.borderWidth = 1
+            
+            layer.onAppearanceChanged = { [unowned layer] in
+                print(layer.ap.theme, layer.ap.isUserInterfaceDark)
+            }
         }
 
         view.layer.addSublayer(layer)

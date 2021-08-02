@@ -8,6 +8,11 @@
 import UIKit
 
 extension UIView: AppearanceEnvironment {
+    public var onAppearanceChanged: (() -> Void)? {
+        get { getAssociated("AppearanceKit.onAppearanceChanged") }
+        set { setAssociated("AppearanceKit.onAppearanceChanged", newValue) }
+    }
+    
     @objc open func configureAppearance() {
         let appearance = ap
         appearance.setConfigureOnce()
@@ -26,7 +31,7 @@ extension UIView {
     }()
 
     @objc override func configureAppearanceChange() {
-        configureAppearance()
+        configAppearanceAndTriggerOnchanged()
         _updateAppearance(traits: traits.changingTrait, exceptSelf: true)
     }
 

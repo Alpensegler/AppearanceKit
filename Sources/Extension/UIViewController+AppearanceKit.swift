@@ -8,6 +8,11 @@
 import UIKit
 
 extension UIViewController: AppearanceEnvironment {
+    public var onAppearanceChanged: (() -> Void)? {
+        get { getAssociated("AppearanceKit.onAppearanceChanged") }
+        set { setAssociated("AppearanceKit.onAppearanceChanged", newValue) }
+    }
+    
     @objc open func configureAppearance() {
         let appearance = ap
         appearance.setConfigureOnce()
@@ -24,7 +29,7 @@ extension UIViewController {
     
     @objc override func configureAppearanceChange() {
         let config: (UIViewController) -> Void = {
-            $0.configureAppearance()
+            $0.configAppearanceAndTriggerOnchanged()
             $0._updateAppearance(traits: $0.traits.changingTrait, exceptSelf: true, configView: true)
         }
         if isViewLoaded {

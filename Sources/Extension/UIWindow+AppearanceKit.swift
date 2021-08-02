@@ -20,14 +20,14 @@ extension UIWindow {
     
     @objc func __init(frame: CGRect) -> UIWindow {
         let window = __init(frame: frame)
-        window.configureAppearance()
+        window.configAppearanceAndTriggerOnchanged()
         return window
     }
     
     @available(iOS 13.0, *)
     @objc func __init(windowScene: UIWindowScene) -> UIWindow {
         let window = __init(windowScene: windowScene)
-        window.configureAppearance()
+        window.configAppearanceAndTriggerOnchanged()
         return window
     }
     
