@@ -7,9 +7,9 @@
 
 import ObjectiveC.runtime
 
-public protocol Associatable: AnyObject { }
+protocol Associatable: AnyObject { }
 
-public struct Associator {
+struct Associator {
     public enum Policy {
         case assign
         case retain
@@ -28,7 +28,7 @@ public struct Associator {
     let object: AnyObject
 }
 
-public extension Associator {
+extension Associator {
     init(_ object: AnyObject) {
         self.object = object
     }
@@ -59,7 +59,7 @@ public extension Associator {
     }
 }
 
-public extension Associatable {
+extension Associatable {
     func getAssociated<T: DefaultInitializable>(_ key: String, policy: Associator.Policy = .retain) -> T {
         Associator(self).getAssociated(key, policy: policy)
     }

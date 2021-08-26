@@ -6,7 +6,7 @@
 //
 
 @propertyWrapper
-public struct Referance<Value> {
+struct Referance<Value> {
     let getter: () -> Value
     let setter: (Value) -> Void
     
@@ -39,7 +39,7 @@ public struct Referance<Value> {
     }
 }
 
-public extension Referance where Value: DefaultInitializable {
+extension Referance where Value: DefaultInitializable {
     init(assciatedIn object: AnyObject, key: String) {
         self.init(assciatedIn: object, key: key, wrappedValue: .init())
     }
